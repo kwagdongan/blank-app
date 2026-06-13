@@ -35,8 +35,8 @@ genre_counts.columns = ['Genre', 'Count']
 genre_counts = genre_counts[genre_counts['Genre'] != ''] # 빈 값 제거
 
 # 4. 결과 출력
-st.subheader("장르별 게임 수 Top 10")
-st.dataframe(genre_counts.head(10), use_container_width=True)
+st.subheader("장르별 게임 수 Top 5")
+st.dataframe(genre_counts.head(5), use_container_width=True)
 
 # 5. 시각화
 st.bar_chart(genre_counts.head(10).set_index('Genre'))
