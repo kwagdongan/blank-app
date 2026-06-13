@@ -1,36 +1,27 @@
 import streamlit as st
 import pandas as pd
-import os
 
-st.title("긍정적인 평가가 많은 게임 Top 10")
+st.title("긍정 비율이 높은 게임 분석")
 
-# 1. 데이터 로드 (인코딩 문제 방지)
+# 1. 데이터 로드 및 정제
 @st.cache_data
 def load_data():
-    # 파일 경로 설정
-    file_path = 'datas.csv'
-    # 인코딩이 안 맞는 경우를 대비해 'cp949' 시도 후 실패 시 'utf-8-sig' 시도
-    try:
-        df = pd.read_csv(file_path, encoding='cp949')
-    except:
-        df = pd.read_csv(file_path, encoding='utf-8-sig')
+    df = pd.read_csv('datas.csv', encoding='cp949') # 인코딩 상황에 맞게 조정
     
-    # total_positive를 숫자로 변환 (숫자 아닌 값은 NaN 처리)
-    df['total_positive'] = pd.to_numeric(df['total_positive'], errors='coerce')
+    # 숫자 변환
+    df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
+    df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
     
-    # 결측치 제거
-    df = df.dropna(subset=['total_positive'])
+    # NaN 제거
+    df = df.dropna(subset=['positive_percentual', 'total_reviews'])
     return df
 
-# 데이터 로드
 df = load_data()
 
-# 2. 'total_positive' 기준 상위 10개 추출
-top10_positive = df.nlargest(10, 'total_positive')[['name', 'total_positive']]
+# 2. 분석 로직
+# 긍정 비율 100%인 게임 중, 리뷰 수가 많은 순서대로 상위 10개 추출
+top_positive_games = df[df['positive_percentual'] == 100].sort_values(by='total_reviews', ascending=False).head(10)
 
 # 3. 화면 출력
-st.dataframe(top10_positive, use_container_width=True)
-
-# 4. 차트 추가 (데이터 시각화)
-st.subheader("그래프로 보기")
-st.bar_chart(top10_positive.set_index('name'))
+st.subheader("긍정 비율 100% & 리뷰 많은 순 Top 10")
+st.dataframe(top_positive_games[['name', 'positive_percentual', 'total_reviews']], use_container_width=True)
