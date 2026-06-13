@@ -30,3 +30,32 @@ def load_and_clean_data():
 
 # 데이터 로드
 df = load_and_clean_data()
+
+EXCLUDED_TAGS = ['Indie', 'Early Access', 'Free to Play']
+
+def clean_genres(genre_data):
+    if pd.isna(genre_data) or genre_data == '': 
+        return []
+    
+    # 문자열 처리
+    if isinstance(genre_data, str):
+        if genre_data.startswith('['):
+            try:
+                # 리스트 형태의 문자열 처리
+                data = ast.literal_eval(genre_data)
+            except:
+                # 실패 시 쉼표로 분리
+                clean = genre_data.replace('[', '').replace(']', '').replace("'", "").replace('"', '')
+                data = clean.split(',')
+        else:
+            data = genre_data.split(',')
+    elif isinstance(genre_data, list):
+        data = genre_data
+    else:
+        return []
+    
+    # [핵심] 리스트 안에서 공백 제거 + 제외 키워드 삭제
+    return [g.strip() for g in data if g.strip() != '' and g.strip() not in EXCLUDED_TAGS]
+
+# 정제 적용
+df['genres_list'] = df['genres'].apply(clean_genres)
