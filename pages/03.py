@@ -1,17 +1,25 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 
-st.subheader("긍정 비율 vs 리뷰 수 2차원 분석")
-df = pd.read_csv('datas.csv', encoding='utf-8-sig')
+st.subheader("리뷰 수 vs 긍정 비율 분석")
 
-# 산점도를 위한 데이터 준비 (인터랙티브한 그래프)
+# 1. 데이터 로드 및 이상치 필터링
+df = st.session_state['df']
+
+# 리뷰 수가 너무 적은 데이터(예: 10개 미만)는 통계적 의미가 없으므로 제외
+# 데이터 타입이 확실하게 숫자인지 재확인
+df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
+df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
+
+# 리뷰 수가 10개 이상인 게임만 대상으로 산점도 출력 (신뢰도 확보)
+filtered_df = df[df['total_reviews'] >= 10].copy()
+
+# 2. 산점도 출력
 st.scatter_chart(
-    df, 
-    x='total_reviews', 
-    y='positive_percentual',
-    # 마우스 올리면 게임 이름이 보이게 설정
-    size=None, 
-    color=None 
+    filtered_df,
+    x='total_reviews',
+    y='positive_percentual'
 )
 
-st.write("💡 **분석 팁:** 오른쪽 상단(리뷰도 많고, 긍정 비율도 높은 영역)에 위치한 게임들이 시장을 주도하는 긍정적 지표를 가진 게임들입니다.")
+st.write(f"분석 중인 게임 수: {len(filtered_df)}개 (리뷰 10개 미만 제외)")
