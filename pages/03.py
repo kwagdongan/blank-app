@@ -12,14 +12,15 @@ df = st.session_state['df']
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
 df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
 
-# 리뷰 수가 10개 이상인 게임만 대상으로 산점도 출력 (신뢰도 확보)
-filtered_df = df[df['total_reviews'] >= 30].copy()
+df = df[(df['total_reviews'] > 30) & (df['positive_percentual'] > 0)].copy()
 
-# 2. 산점도 출력
+# 리뷰 수에 로그 변환 적용 (리뷰 1개 = 0, 100개 = 2, 10000개 = 4 등)
+df['log_reviews'] = np.log10(df['total_reviews'])
+
+# 이제 log_reviews를 x축으로 사용
 st.scatter_chart(
-    filtered_df,
-    x='total_reviews',
+    df, 
+    x='log_reviews', 
     y='positive_percentual'
 )
-
-st.write(f"분석 중인 게임 수: {len(filtered_df)}개 (리뷰 10개 미만 제외)")
+st.write(f"분석 중인 게임 수: {len(filtered_df)}개 (리뷰 30개 미만 제외)")
