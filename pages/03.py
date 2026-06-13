@@ -1,6 +1,7 @@
 import streamlit as st
 
 st.subheader("긍정 비율 vs 리뷰 수 2차원 분석")
+df = pd.read_csv('datas.csv', encoding='utf-8-sig')
 
 # 산점도를 위한 데이터 준비 (인터랙티브한 그래프)
 st.scatter_chart(
