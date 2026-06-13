@@ -40,3 +40,5 @@ st.dataframe(genre_counts.head(20), use_container_width=True)
 
 # 5. 시각화
 st.bar_chart(genre_counts.head(20).set_index('Genre'))
+
+st.write(f"분석 중인 게임 수: {len(df_genres)}개 ")
