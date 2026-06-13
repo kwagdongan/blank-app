@@ -14,8 +14,6 @@ df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coe
 
 df = df[(df['total_reviews'] > 30) & (df['positive_percentual'] > 0)].copy()
 
-# 리뷰 수에 로그 변환 적용 (리뷰 1개 = 0, 100개 = 2, 10000개 = 4 등)
-df['log_reviews'] = np.log10(df['total_reviews'])
 
 # 이제 log_reviews를 x축으로 사용
 st.scatter_chart(
