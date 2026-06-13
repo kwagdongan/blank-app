@@ -13,7 +13,7 @@ df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
 df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
 
 # 리뷰 수가 10개 이상인 게임만 대상으로 산점도 출력 (신뢰도 확보)
-filtered_df = df[df['total_reviews'] >= 10].copy()
+filtered_df = df[df['total_reviews'] >= 30].copy()
 
 # 2. 산점도 출력
 st.scatter_chart(
