@@ -39,5 +39,5 @@ st.subheader("장르별 게임 수 Top 5")
 st.dataframe(genre_counts.head(5), use_container_width=True)
 
 # 5. 시각화
-st.bar_chart(genre_counts.head(10).set_index('Genre'))
+st.bar_chart(genre_counts.head(5).set_index('Genre'))
 
