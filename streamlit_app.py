@@ -14,11 +14,30 @@ def load_data():
 if 'df' not in st.session_state:
     st.session_state['df'] = load_data()
 
-# 기존 정제 코드 바로 밑에 추가
+def clean_genres(genre_data):
+    # NaN이거나 빈 값이면 빈 리스트 반환
+    if pd.isna(genre_data) or genre_data == '':
+        return []
+    
+    # 이미 리스트 형태라면 그대로 반환
+    if isinstance(genre_data, list):
+        return [g for g in genre_data if g != 'Indie']
+    
+    # 문자열 처리
+    if isinstance(genre_data, str):
+        if genre_data.startswith('['):
+            try:
+                data = ast.literal_eval(genre_data)
+                return [g for g in data if g != 'Indie']
+            except:
+                clean = genre_data.replace('[', '').replace(']', '').replace("'", "").replace('"', '')
+                data = [g.strip() for g in clean.split(',')]
+                return [g for g in data if g != 'Indie' and g != '']
+        else:
+            data = [g.strip() for g in genre_data.split(',')]
+            return [g for g in data if g != 'Indie' and g != '']
+    
+    return []
+
+# 데이터 적용 (이 한 줄로 끝납니다)
 df['genres_list'] = df['genres'].apply(clean_genres)
-
-# [핵심] 'Indie' 제거: 모든 장르 리스트에서 'Indie' 삭제
-df['genres_list'] = df['genres_list'].apply(lambda x: [g for g in x if g != 'Indie'])
-
-# 이후 df_genres를 explode 하세요
-df_genres = df.explode('genres_list')
