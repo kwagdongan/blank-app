@@ -1,32 +1,42 @@
 import streamlit as st
 import pandas as pd
+import ast
 
-st.title("가장 인기 있는 태그 분석")
+st.title("장르별 게임 분포 분석")
 
-# 1. 세션에서 데이터 가져오기
+# 1. 데이터 로드 및 정제
 df = st.session_state['df'].copy()
 
-# 2. 태그 데이터 정제 및 분리
-# 태그가 쉼표(,)로 구분되어 있다고 가정합니다. (혹시 구분자가 다르다면 말씀해주세요!)
-# 예: "Action, Adventure, Indie" -> ["Action", "Adventure", "Indie"]
-df['genres'] = df['genres'].fillna('') # 빈 값 처리
-df['tags_list'] = df['genres'].str.split(',') 
+def clean_genres(genre_data):
+    if pd.isna(genre_data) or genre_data == '':
+        return []
+    
+    # 리스트 형태의 문자열(예: "['Action', 'RPG']")인 경우
+    if isinstance(genre_data, str) and genre_data.startswith('['):
+        try:
+            return ast.literal_eval(genre_data)
+        except:
+            # 실패 시 특수문자 제거
+            clean = genre_data.replace('[', '').replace(']', '').replace("'", "").replace('"', '')
+            return [g.strip() for g in clean.split(',')]
+    
+    # 이미 콤마로 구분된 문자열인 경우
+    return [g.strip() for g in genre_data.split(',')]
 
-# 3. 데이터 펼치기 (Explode)
-# 하나의 행을 태그 개수만큼 여러 행으로 복제합니다.
-df_tags = df.explode('tags_list')
+# 장르 정제 적용
+df['genres_list'] = df['genres'].apply(clean_genres)
 
-# 4. 앞뒤 공백 제거 및 대문자 통일 (정확한 카운팅을 위해)
-df_tags['tags_list'] = df_tags['tags_list'].str.strip().str.lower()
+# 2. 데이터 펼치기
+df_genres = df.explode('genres_list')
 
-# 5. 태그별 빈도 계산
-tag_counts = df_tags['tags_list'].value_counts().reset_index()
-tag_counts.columns = ['Tag', 'Count']
+# 3. 빈도 분석
+genre_counts = df_genres['genres_list'].value_counts().reset_index()
+genre_counts.columns = ['Genre', 'Count']
+genre_counts = genre_counts[genre_counts['Genre'] != ''] # 빈 값 제거
 
-# 6. 결과 출력
-st.subheader("태그별 등장 횟수 Top 20")
-st.dataframe(tag_counts.head(20), use_container_width=True)
+# 4. 결과 출력
+st.subheader("장르별 게임 수 Top 20")
+st.dataframe(genre_counts.head(20), use_container_width=True)
 
-# 7. 시각화
-st.subheader("태그 빈도 그래프")
-st.bar_chart(tag_counts.head(20).set_index('Tag'))
+# 5. 시각화
+st.bar_chart(genre_counts.head(20).set_index('Genre'))
