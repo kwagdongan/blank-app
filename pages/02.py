@@ -6,7 +6,7 @@ st.title("긍정 비율이 높은 게임 분석")
 # 1. 데이터 로드 및 정제
 @st.cache_data
 def load_data():
-    df = pd.read_csv('datas.csv', encoding='cp949') # 인코딩 상황에 맞게 조정
+    df = pd.read_csv('datas.csv', encoding='utf-8-sig') # 인코딩 상황에 맞게 조정
     
     # 숫자 변환
     df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
