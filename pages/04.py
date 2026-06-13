@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import ast
 
-st.title("진정한 블루오션 장르 발굴 (가중치 분석)")
+st.title("진정한 블루오션 장르 발굴 (상위 5개 제외)")
 
-# 1. 데이터 로드 및 전처리
+# 1. 데이터 로드 및 정제
 df = st.session_state['df'].copy()
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
 df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
@@ -19,27 +19,29 @@ def clean_genres(genre_data):
 
 df['genres_list'] = df['genres'].apply(clean_genres)
 
-# 2. 전체 시장의 장르 분포 계산 (Baseline)
-all_genres = df.explode('genres_list')
-total_counts = all_genres['genres_list'].value_counts(normalize=True) # 비율로 계산
+# 2. [확정] 전체 시장 기준 레드오션 Top 5 추출
+all_genres_exploded = df.explode('genres_list')
+red_ocean_top5 = all_genres_exploded['genres_list'].value_counts().nlargest(5).index.tolist()
 
-# 3. 제1사분면(성공군) 장르 분포 계산
+st.write(f"🛑 **레드오션으로 분류되어 제외된 장르(Top 5):** {', '.join(red_ocean_top5)}")
+
+# 3. 제1사분면(성공군) 데이터 추출
 review_q3 = df['total_reviews'].quantile(0.75)
 positive_q3 = df['positive_percentual'].quantile(0.75)
 q1_games = df[(df['total_reviews'] >= review_q3) & (df['positive_percentual'] >= positive_q3)].copy()
 
-q1_genres = q1_games.explode('genres_list')
-q1_counts = q1_genres['genres_list'].value_counts(normalize=True)
+# 4. 성공군 데이터에서 레드오션 장르를 제외한 장르만 필터링
+q1_genres_exploded = q1_games.explode('genres_list')
+blue_ocean_candidates = q1_genres_exploded[~q1_genres_exploded['genres_list'].isin(red_ocean_top5)]
 
-# 4. [핵심] 성공군 장르 가치 점수화
-# 공식: (성공군 내 장르 점유율) / (전체 시장 내 장르 점유율)
-# 이 값이 1보다 크면 시장 대비 성공한 게임에 더 자주 등장한다는 뜻입니다.
-comparison = pd.DataFrame({'Total_Ratio': total_counts, 'Success_Ratio': q1_counts})
-comparison['Score'] = comparison['Success_Ratio'] / comparison['Total_Ratio']
+# 5. 빈도수 및 평균 긍정 비율 계산 (결과 정렬)
+result = blue_ocean_candidates.groupby('genres_list').agg(
+    성공_게임수=('name', 'count'),
+    평균_긍정비율=('positive_percentual', 'mean')
+).sort_values(by='성공_게임수', ascending=False)
 
-# 5. 결과 필터링 (너무 적게 등장하는 데이터는 제외)
-min_occurrence = 5 # 최소 5번 이상 등장한 장르만
-final_result = comparison[comparison['Score'] > 1].dropna().sort_values(by='Score', ascending=False)
+# 6. 결과 출력
+st.subheader("발굴된 블루오션 장르 (레드오션 Top 5 제외)")
+st.dataframe(result, use_container_width=True)
 
-st.subheader("시장 대비 성공률이 높은 블루오션 장르")
-st.dataframe(final_result, use_container_width=True)
+st.write("💡 **해석:** 위 장르들은 가장 대중적인 5개 장르에 속하지 않으면서, 동시에 성공한 게임군에서 자주 발견되는 가치 있는 장르들입니다.")
