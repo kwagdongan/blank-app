@@ -14,30 +14,19 @@ def load_data():
 if 'df' not in st.session_state:
     st.session_state['df'] = load_data()
 
-def clean_genres(genre_data):
-    # NaN이거나 빈 값이면 빈 리스트 반환
-    if pd.isna(genre_data) or genre_data == '':
-        return []
-    
-    # 이미 리스트 형태라면 그대로 반환
-    if isinstance(genre_data, list):
-        return [g for g in genre_data if g != 'Indie']
-    
-    # 문자열 처리
-    if isinstance(genre_data, str):
-        if genre_data.startswith('['):
-            try:
-                data = ast.literal_eval(genre_data)
-                return [g for g in data if g != 'Indie']
-            except:
-                clean = genre_data.replace('[', '').replace(']', '').replace("'", "").replace('"', '')
-                data = [g.strip() for g in clean.split(',')]
-                return [g for g in data if g != 'Indie' and g != '']
-        else:
-            data = [g.strip() for g in genre_data.split(',')]
-            return [g for g in data if g != 'Indie' and g != '']
-    
-    return []
 
-# 데이터 적용 (이 한 줄로 끝납니다)
-df['genres_list'] = df['genres'].apply(clean_genres)
+
+def load_and_clean_data():
+    df = pd.read_csv('datas.csv', encoding='utf-8-sig')
+    # 1. total_reviews를 숫자로 강제 변환
+    # errors='coerce'를 쓰면 숫자로 바꿀 수 없는 값은 자동으로 NaN(결측치)으로 변합니다.
+    df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
+    
+    # 2. total_reviews가 NaN인 행(숫자가 아니었던 행들)은 아예 삭제합니다.
+    df_cleaned = df.dropna(subset=['total_reviews'])
+    
+    # 3. 데이터가 잘 정제되었는지 확인하기 위해 상위 5개 출력 (디버깅용)
+    return df_cleaned
+
+# 데이터 로드
+df = load_and_clean_data()
