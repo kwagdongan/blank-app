@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 st.subheader("긍정 비율 vs 리뷰 수 2차원 분석")
 df = pd.read_csv('datas.csv', encoding='utf-8-sig')
