@@ -3,6 +3,7 @@ import pandas as pd
 
 
 def load_and_clean_data():
+    df = pd.read_csv('datas.csv', encoding='utf-8-sig')
     # 1. total_reviews를 숫자로 강제 변환
     # errors='coerce'를 쓰면 숫자로 바꿀 수 없는 값은 자동으로 NaN(결측치)으로 변합니다.
     df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
