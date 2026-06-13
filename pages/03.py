@@ -18,6 +18,13 @@ filtered_df = df[(df['total_reviews'] > 0) & (df['positive_percentual'] > 0)].co
 # 2. 산점도 출력
 top_reviews_df = filtered_df.nlargest(500, 'total_reviews')
 
-st.scatter_chart(top_reviews_df, x='total_reviews', y='positive_percentual')
+st.scatter_chart(top_reviews_df,
+    x='total_reviews', 
+    y='positive_percentual',
+    hover_name='name',  # 게임 이름 제목 표시
+    hover_data={
+        'total_reviews': ':,.0f',         # 콤마 찍고 정수형으로 표시
+        'positive_percentual': ':.1f%',   # % 붙여서 소수점 첫째 자리까지 표시
+        'name': False    )                 # hover_name으로 쓰이므로 리스트에서 제외)
 
 st.write(f"분석 중인 게임 수: {len(filtered_df)}개 (리뷰 10개 미만 제외)")
