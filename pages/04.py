@@ -5,7 +5,7 @@ import ast
 st.title("진정한 블루오션 장르 발굴 (상위 5개 제외)")
 
 # 1. 데이터 로드 및 정제
-df = st.session_state['df'].copy()
+df = st.session_state['df']
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
 df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
 df = df[(df['total_reviews'] > 0) & (df['positive_percentual'] > 0)].copy()
