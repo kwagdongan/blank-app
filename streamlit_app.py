@@ -14,12 +14,11 @@ def load_data():
 if 'df' not in st.session_state:
     st.session_state['df'] = load_data()
 
-# 1. 데이터 로드 및 정제 후
-df['genres_list'] = df['genres'].apply()
+# 기존 정제 코드 바로 밑에 추가
+df['genres_list'] = df['genres'].apply(clean_genres)
 
-# [추가] 분석 시작 전 'Indie' 장르를 모든 행의 리스트에서 제거
+# [핵심] 'Indie' 제거: 모든 장르 리스트에서 'Indie' 삭제
 df['genres_list'] = df['genres_list'].apply(lambda x: [g for g in x if g != 'Indie'])
 
-# 2. 이후 전체 장르 빈도 분석 진행
+# 이후 df_genres를 explode 하세요
 df_genres = df.explode('genres_list')
-# ... 이하 동일
