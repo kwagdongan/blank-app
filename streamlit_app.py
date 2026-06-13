@@ -57,5 +57,18 @@ def clean_genres(genre_data):
     # [핵심] 리스트 안에서 공백 제거 + 제외 키워드 삭제
     return [g.strip() for g in data if g.strip() != '' and g.strip() not in EXCLUDED_TAGS]
 
-# 정제 적용
+
+EXCLUDED = ['indie', 'early access', 'free to play']
+
+def clean_genres2(genre_data):
+    # (위에서 짠 대소문자 무시/제거 함수 그대로 사용)
+    # ... 결과값은 문자열 형태가 아닌, 깔끔하게 정리된 리스트로 반환하세요.
+    return [g.strip() for g in data if g.lower() not in EXCLUDED]
+
+# 덮어쓰기 (중요: 여기서 genres 컬럼 자체를 리스트 값으로 바꿔버림)
 df['genres'] = df['genres'].apply(clean_genres)
+
+
+
+# 정제 적용
+df['genres'] = df['genres'].apply(clean_genres2)
