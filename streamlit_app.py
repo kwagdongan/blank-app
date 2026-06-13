@@ -58,4 +58,4 @@ def clean_genres(genre_data):
     return [g.strip() for g in data if g.strip() != '' and g.strip() not in EXCLUDED_TAGS]
 
 # 정제 적용
-df['genres_list'] = df['genres'].apply(clean_genres)
+df['genres'] = df['genres'].apply(clean_genres)
