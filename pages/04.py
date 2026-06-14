@@ -37,8 +37,8 @@ st.write(
 # 2. 성공 게임 정의
 # -------------------------------
 
-review_q3 = df['total_reviews'].quantile(0.75)
-positive_q3 = df['positive_percentual'].quantile(0.75)
+review_q3 = df['total_reviews'].quantile(0.50)
+positive_q3 = df['positive_percentual'].quantile(0.50)
 
 success_games = df[
     (df['total_reviews'] >= review_q3) &
