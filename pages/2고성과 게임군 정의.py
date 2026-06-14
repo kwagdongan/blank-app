@@ -25,10 +25,15 @@ chart = (
             'positive_percentual:Q',
             title='긍정 평가 비율 (%)',
             axis=alt.Axis(
-                titleAngle=0,     # 90도 회전 제거
+                titleAngle=0,
                 titlePadding=20
             )
-        )
+        ),
+        tooltip=[
+            alt.Tooltip('name:N', title='게임명'),
+            alt.Tooltip('total_reviews:Q', title='총 리뷰 수', format=','),
+            alt.Tooltip('positive_percentual:Q', title='긍정 평가 비율', format='.1f')
+        ]
     )
     .properties(height=500)
 )
