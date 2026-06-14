@@ -40,7 +40,7 @@ chart = (
 
 st.altair_chart(chart, use_container_width=True)
 
-st.info("---")
+st.markdown("---")
 
 
 
@@ -56,7 +56,7 @@ high_perf = df[
     (df['positive_percentual'] >= positive_q3)
 ].copy()
 
-st.markdown(
+st.info(
     f"""
     고성과 게임군은
 
