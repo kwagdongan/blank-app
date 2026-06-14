@@ -10,10 +10,7 @@ df = st.session_state['df'].copy()
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
 df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
 
-df = df[
-    (df['total_reviews'] > 0) &
-    (df['positive_percentual'] > 0)
-].copy()
+
 
 # -------------------------------
 # 1. 레드오션 장르 추출
