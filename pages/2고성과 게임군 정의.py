@@ -78,8 +78,16 @@ st.subheader("고성과 게임 Top 5")
 
 top5 = high_perf.nlargest(5, 'total_reviews')
 
+display_df = top5[
+    ['name', 'total_reviews', 'positive_percentual']
+].rename(columns={
+    'name': '게임명',
+    'total_reviews': '총 리뷰 수',
+    'positive_percentual': '긍정 평가 비율 (%)'
+})
+
 st.dataframe(
-    top5[['name', 'total_reviews', 'positive_percentual']],
+    display_df,
     use_container_width=True,
     hide_index=True
 )
