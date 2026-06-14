@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import ast
+from collections import Counter
+
 
 st.title("장르별 게임 분포 분석")
 
@@ -41,4 +43,15 @@ st.dataframe(genre_counts.head(5), use_container_width=True)
 
 # 5. 시각화
 st.bar_chart(genre_counts.head(5).set_index('Genre'))
+
+
+
+all_tags = []
+
+for tags in df["genres"]:
+    all_tags.extend(tags)
+
+tag_counts = Counter(all_tags)
+
+st.write(tag_counts.most_common(20))
 
