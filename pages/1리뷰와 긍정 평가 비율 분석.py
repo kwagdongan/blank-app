@@ -4,14 +4,25 @@ import numpy as np
 
 st.title("📊 분석 지표 정의")
 
-# 데이터 가져오기
+# ==========================
+# 데이터 로드
+# ==========================
+
 df = st.session_state['df'].copy()
 
-# 숫자형 변환
-df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
-df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
+df['total_reviews'] = pd.to_numeric(
+    df['total_reviews'],
+    errors='coerce'
+)
 
-df = df.dropna(subset=['total_reviews', 'positive_percentual'])
+df['positive_percentual'] = pd.to_numeric(
+    df['positive_percentual'],
+    errors='coerce'
+)
+
+df = df.dropna(
+    subset=['total_reviews', 'positive_percentual']
+)
 
 # ==========================
 # 지표 설명
@@ -20,9 +31,21 @@ df = df.dropna(subset=['total_reviews', 'positive_percentual'])
 st.subheader("분석에 사용된 지표")
 
 metrics_df = pd.DataFrame({
-    "지표": ["총 리뷰 수", "긍정 평가 비율", "태그 빈도"],
-    "의미": ["사용자 관심도", "사용자 만족도", "시장 경쟁 정도"],
-    "분석 목적": ["시장 반응 측정", "게임 품질 평가", "레드오션 판단"]
+    "지표": [
+        "총 리뷰 수",
+        "긍정 평가 비율",
+        "태그 빈도"
+    ],
+    "의미": [
+        "사용자 관심도",
+        "사용자 만족도",
+        "시장 경쟁 정도"
+    ],
+    "분석 목적": [
+        "시장 반응 측정",
+        "게임 품질 평가",
+        "레드오션 판단"
+    ]
 })
 
 st.dataframe(
@@ -34,52 +57,16 @@ st.dataframe(
 st.markdown("---")
 
 # ==========================
-# 분포 그래프
-# ==========================
-
-col1, col2 = st.columns(2)
-
-with col1:
-    st.subheader("📈 총 리뷰 수 분포")
-
-    review_hist = pd.cut(
-        df['total_reviews'],
-        bins=20
-    ).value_counts().sort_index()
-
-    st.bar_chart(review_hist)
-
-    st.caption(
-        "리뷰 수는 게임에 대한 사용자 관심도를 나타내는 지표로 사용하였다."
-    )
-
-with col2:
-    st.subheader("👍 긍정 평가 비율 분포")
-
-    positive_hist = pd.cut(
-        df['positive_percentual'],
-        bins=np.arange(0, 105, 5)
-    ).value_counts().sort_index()
-
-    st.bar_chart(positive_hist)
-
-    st.caption(
-        "긍정 평가 비율은 게임에 대한 사용자 만족도를 나타내는 지표로 사용하였다."
-    )
-
-st.markdown("---")
-
-# ==========================
 # 요약 통계
 # ==========================
 
-st.subheader("요약 통계")
+st.subheader("📈 데이터 요약")
 
-c1, c2, c3, c4 = st.columns(4)
+c1, c2, c3 = st.columns(3)
 
 with c1:
     st.metric(
-        "게임 수",
+        "전체 게임 수",
         f"{len(df):,}"
     )
 
@@ -95,11 +82,81 @@ with c3:
         f"{df['positive_percentual'].mean():.1f}%"
     )
 
-with c4:
-    st.metric(
-        "중앙값 리뷰 수",
-        f"{int(df['total_reviews'].median()):,}"
+st.markdown("---")
+
+# ==========================
+# 리뷰 수 분포
+# ==========================
+
+col1, col2 = st.columns(2)
+
+with col1:
+
+    st.subheader("🔥 총 리뷰 수 분포")
+
+    # 로그 변환
+    review_log = np.log10(
+        df['total_reviews'] + 1
     )
+
+    review_bins = pd.cut(
+        review_log,
+        bins=15
+    )
+
+    review_counts = (
+        review_bins
+        .value_counts()
+        .sort_index()
+    )
+
+    review_df = pd.DataFrame({
+        "구간": review_counts.index.astype(str),
+        "게임 수": review_counts.values
+    })
+
+    st.bar_chart(
+        review_df.set_index("구간")
+    )
+
+    st.caption(
+        "리뷰 수는 사용자 관심도를 나타낸다. "
+        "그래프는 로그 변환 후 시각화하였다."
+    )
+
+# ==========================
+# 긍정 평가 비율 분포
+# ==========================
+
+with col2:
+
+    st.subheader("👍 긍정 평가 비율 분포")
+
+    positive_bins = pd.cut(
+        df['positive_percentual'],
+        bins=np.arange(0, 105, 5)
+    )
+
+    positive_counts = (
+        positive_bins
+        .value_counts()
+        .sort_index()
+    )
+
+    positive_df = pd.DataFrame({
+        "구간": positive_counts.index.astype(str),
+        "게임 수": positive_counts.values
+    })
+
+    st.bar_chart(
+        positive_df.set_index("구간")
+    )
+
+    st.caption(
+        "긍정 평가 비율은 사용자 만족도를 나타낸다."
+    )
+
+st.markdown("---")
 
 st.info("""
 본 연구에서는
