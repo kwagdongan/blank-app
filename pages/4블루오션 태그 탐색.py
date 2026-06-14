@@ -27,7 +27,7 @@ red_ocean_tag = (
 )
 
 st.write(
-    f"🛑 제외된 레드오션 태그 : {', '.join(red_ocean_tag)}"
+    f"제외된 레드오션 태그 : {', '.join(red_ocean_tag)}"
 )
 
 # -------------------------------
