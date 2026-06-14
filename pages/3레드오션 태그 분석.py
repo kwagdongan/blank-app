@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-st.title("태그별 게임 분포 분석")
+st.title("레드오션 태그 분석")
 
 df = st.session_state['df']
 
@@ -21,7 +21,7 @@ top_group = genre_counts[genre_counts['빈도'] >= q92]
 # 전체 평균
 overall_avg = genre_counts['빈도'].mean()
 
-st.subheader("태그 빈도 상위 그룹")
+st.subheader("태그 빈도 상위 그룹 (상위 25%)")
 
 st.dataframe(
     top_group,
@@ -61,5 +61,6 @@ st.altair_chart(
 )
 
 st.caption(
-    f"빨간 선은 전체 태그 평균 빈도 ({overall_avg:.1f})를 의미한다."
+    f"빨간 선은 전체 태그 평균 빈도를 의미함.({overall_avg:.1f})"
 )
+st.markdown("태그 빈도 상위 25%를 경쟁이 심한 레드오션 태그로 정의함")
