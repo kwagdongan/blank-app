@@ -32,7 +32,7 @@ def load_and_clean_data():
 df = load_and_clean_data()
 
 EXCLUDED_TAGS = ['Indie', 'Early Access', 'Free to Play']
-
+df = df.drop(columns=EXCLUDED_TAGS, errors="ignore")
 def clean_genres(genre_data):
     if pd.isna(genre_data) or genre_data == '': 
         return []
