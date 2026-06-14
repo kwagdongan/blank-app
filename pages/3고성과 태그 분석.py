@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import alt
+import ast
 
 st.title("고성과 태그 분석")
 
