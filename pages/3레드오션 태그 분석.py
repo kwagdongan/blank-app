@@ -1,15 +1,15 @@
 import streamlit as st
 import pandas as pd
+import altair as alt
 
 st.title("태그별 게임 분포 분석")
 
-# 데이터 로드
 df = st.session_state['df']
 
-# 데이터 펼치기
+# 태그 펼치기
 df_genres = df.explode('genres')
 
-# 빈도 분석
+# 빈도 계산
 genre_counts = df_genres['genres'].value_counts().reset_index()
 genre_counts.columns = ['태그', '빈도']
 genre_counts = genre_counts[genre_counts['태그'] != '']
@@ -18,7 +18,7 @@ genre_counts = genre_counts[genre_counts['태그'] != '']
 q92 = genre_counts['빈도'].quantile(0.92)
 top_group = genre_counts[genre_counts['빈도'] >= q92]
 
-# 전체 평균 빈도
+# 전체 평균
 overall_avg = genre_counts['빈도'].mean()
 
 st.subheader("태그 빈도 상위 그룹")
@@ -29,18 +29,37 @@ st.dataframe(
     hide_index=True
 )
 
-# 그래프 + 평균값
-col1, col2 = st.columns([4, 1])
-
-with col1:
-    st.bar_chart(
-        top_group.set_index('태그')
+# 막대그래프
+bars = alt.Chart(top_group).mark_bar().encode(
+    x=alt.X(
+        '빈도:Q',
+        title='등장 빈도'
+    ),
+    y=alt.Y(
+        '태그:N',
+        sort='-x',
+        title=None
     )
+)
 
-with col2:
-    st.metric(
-        label="전체 평균 빈도",
-        value=f"{overall_avg:.1f}"
-    )
+# 평균선
+avg_line = alt.Chart(
+    pd.DataFrame({'평균': [overall_avg]})
+).mark_rule().encode(
+    x='평균:Q'
+)
 
-    st.caption("전체 태그의 평균 등장 횟수")
+chart = (
+    bars + avg_line
+).properties(
+    height=400
+)
+
+st.altair_chart(
+    chart,
+    use_container_width=True
+)
+
+st.caption(
+    f"빨간 선은 전체 태그 평균 빈도 ({overall_avg:.1f})를 의미한다."
+)
