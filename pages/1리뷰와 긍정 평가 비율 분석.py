@@ -70,13 +70,18 @@ with col1:
 
     st.subheader("총 리뷰 수 분포")
 
+    review_df = pd.DataFrame({
+        "log_reviews": np.log10(
+            df['total_reviews'] + 1
+        )
+    })
 
     review_chart = (
-        alt.Chart(df)
+        alt.Chart(review_df)
         .mark_bar()
         .encode(
             x=alt.X(
-                "total_reviews:Q",
+                "log_reviews:Q"",
                 bin=alt.Bin(maxbins=30),
                 title="log10(총 리뷰 수)"
             ),
