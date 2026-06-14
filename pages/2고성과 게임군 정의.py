@@ -19,7 +19,7 @@ df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coe
 top_reviews_df = df.nlargest(500, 'total_reviews')
 
 st.scatter_chart(
-    filtered_df,
+    df,
     x='total_reviews',
     y='positive_percentual'
 )
