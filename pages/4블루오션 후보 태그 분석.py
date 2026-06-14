@@ -144,3 +144,24 @@ Y축은 해당 태그가 고성과 게임군에 포함되는 비중을 의미
 좌상단에 위치할수록 경쟁은 적지만
 고성과 게임에서 자주 발견되는 태그로 해석할 수 있다.
 """)
+
+st.markdown("---")
+
+# 제2사분면 (블루오션 후보)
+quadrant2 = tag_df[
+    (tag_df['전체빈도'] < x_mean) &
+    (tag_df['고성과게임비중'] > y_mean)
+].sort_values(
+    by='고성과게임비중',
+    ascending=False
+)
+
+st.subheader("제2사분면 태그 (블루오션 후보)")
+
+st.dataframe(
+    quadrant2[
+        ['태그', '전체빈도', '고성과게임비중']
+    ],
+    use_container_width=True,
+    hide_index=True
+)
