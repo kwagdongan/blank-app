@@ -43,6 +43,13 @@ st.markdown("""
 st.markdown("""
 
 
+
+
+
+
+
+
+
 데이터 출처: Steam Web API (Valve Corporation)
 """)
 
