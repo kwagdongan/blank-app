@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import altair as alt
 
 st.title("📊 분석 지표 정의")
 
@@ -85,87 +86,95 @@ with c3:
 st.markdown("---")
 
 # ==========================
-# 리뷰 수 분포
+# 히스토그램
 # ==========================
 
 col1, col2 = st.columns(2)
 
+# 리뷰 수
 with col1:
 
     st.subheader("🔥 총 리뷰 수 분포")
 
-    # 로그 변환
-    review_log = np.log10(
-        df['total_reviews'] + 1
-    )
-
-    review_bins = pd.cut(
-        review_log,
-        bins=15
-    )
-
-    review_counts = (
-        review_bins
-        .value_counts()
-        .sort_index()
-    )
-
     review_df = pd.DataFrame({
-        "구간": review_counts.index.astype(str),
-        "게임 수": review_counts.values
+        "log_reviews": np.log10(
+            df['total_reviews'] + 1
+        )
     })
 
-    st.bar_chart(
-        review_df.set_index("구간")
+    review_chart = (
+        alt.Chart(review_df)
+        .mark_bar()
+        .encode(
+            x=alt.X(
+                "log_reviews:Q",
+                bin=alt.Bin(maxbins=30),
+                title="log10(총 리뷰 수)"
+            ),
+            y=alt.Y(
+                "count()",
+                title="게임 수"
+            )
+        )
+        .properties(height=350)
+    )
+
+    st.altair_chart(
+        review_chart,
+        use_container_width=True
     )
 
     st.caption(
-        "리뷰 수는 사용자 관심도를 나타낸다. "
-        "그래프는 로그 변환 후 시각화하였다."
+        "리뷰 수는 사용자 관심도를 의미하며, 값의 편차가 커 로그 변환 후 시각화하였다."
     )
 
-# ==========================
-# 긍정 평가 비율 분포
-# ==========================
-
+# 긍정 비율
 with col2:
 
     st.subheader("👍 긍정 평가 비율 분포")
 
-    positive_bins = pd.cut(
-        df['positive_percentual'],
-        bins=np.arange(0, 105, 5)
+    positive_chart = (
+        alt.Chart(df)
+        .mark_bar()
+        .encode(
+            x=alt.X(
+                "positive_percentual:Q",
+                bin=alt.Bin(step=5),
+                title="긍정 평가 비율 (%)"
+            ),
+            y=alt.Y(
+                "count()",
+                title="게임 수"
+            )
+        )
+        .properties(height=350)
     )
 
-    positive_counts = (
-        positive_bins
-        .value_counts()
-        .sort_index()
-    )
-
-    positive_df = pd.DataFrame({
-        "구간": positive_counts.index.astype(str),
-        "게임 수": positive_counts.values
-    })
-
-    st.bar_chart(
-        positive_df.set_index("구간")
+    st.altair_chart(
+        positive_chart,
+        use_container_width=True
     )
 
     st.caption(
-        "긍정 평가 비율은 사용자 만족도를 나타낸다."
+        "긍정 평가 비율은 사용자 만족도를 의미한다."
     )
 
 st.markdown("---")
 
+# ==========================
+# 분석 설명
+# ==========================
+
 st.info("""
-본 연구에서는
+### 분석 기준
 
-• 총 리뷰 수 → 사용자 관심도
+- 총 리뷰 수 → 사용자 관심도
+- 긍정 평가 비율 → 사용자 만족도
+- 태그 빈도 → 시장 경쟁 정도
 
-• 긍정 평가 비율 → 사용자 만족도
+본 연구에서는 리뷰 수와 긍정 평가 비율이 모두 높은 게임을
+고성과 게임군으로 정의하였다.
 
-로 정의하였다.
-
-이후 두 지표가 모두 높은 게임들을 고성과 게임군으로 정의하여 분석을 진행한다.
+이후 레드오션 태그를 제외한 뒤,
+고성과 게임군에서 자주 등장하는 태그를 블루오션 후보로 탐색하였다.
 """)
