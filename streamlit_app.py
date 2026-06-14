@@ -32,7 +32,7 @@ def load_and_clean_data():
 # 데이터 로드
 df = load_and_clean_data()
 
-EXCLUDED_TAGS = {"Indie", "Early Access", "Free To Play"}
+EXCLUDED_TAGS = {"Indie", "Early Access", "Free To Play", "Software Training", "Game Development", "Audio Production"}
 
 def clean_genres(genre_data):
     if pd.isna(genre_data) or genre_data == '': 
