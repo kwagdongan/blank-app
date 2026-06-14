@@ -62,7 +62,4 @@ def clean_genres(genre_data):
 # 덮어쓰기 (중요: 여기서 genres 컬럼 자체를 리스트 값으로 바꿔버림)
 df['genres'] = df['genres'].apply(clean_genres)
 
-st.write(
-    any("Indie" in tags for tags in df["genres"])
-)
 
