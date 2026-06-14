@@ -5,7 +5,7 @@ import ast
 st.set_page_config(page_title="Steam 분석", layout="wide")
 
 
-st.title("Steam 데이터 기반 게임 시장 블루오션 장르 분석")
+st.title("Steam 게임 시장의 장르 경쟁도 및 고성과 장르 분석")
 
 st.markdown("---")
 
@@ -30,7 +30,7 @@ st.markdown("""
 
 st.header("3. 분석 방법")
 st.markdown("""
-Steam 게임 데이터의 태그, 리뷰 수, 긍정 평가 비율 수치를 활용하였습니다.
+Steam 게임 데이터의 태그(장르), 리뷰 수, 긍정 평가 비율 수치를 활용하였습니다.
 
 - 태그별 평가 수를 통한 사용자 관심도 산출
 - 태그별 평균 긍정 평가 비율을 통한 사용자 만족도 산출
