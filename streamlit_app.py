@@ -40,14 +40,11 @@ st.markdown("""
 3. 어떤 장르가 블루오션 후보로 볼 수 있는가?
 """)
 
+st.markdown("---")
+
+st.subheader("데이터 출처")
+
 st.markdown("""
-
-
-
-
-
-
-
 
 
 데이터 출처: Steam Web API (Valve Corporation)
