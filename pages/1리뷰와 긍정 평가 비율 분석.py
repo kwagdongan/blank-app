@@ -83,7 +83,7 @@ with col1:
             x=alt.X(
                 "log_reviews:Q",
                 bin=alt.Bin(maxbins=30),
-                title="log10(총 리뷰 수)"
+                title="로그 변환 된 총 리뷰 수"
             ),
             y=alt.Y(
                 "count()",
