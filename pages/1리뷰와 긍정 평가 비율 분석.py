@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import altair as alt
 
-st.title("📊 분석 지표 정의")
+st.title("리뷰와 긍정 평가 비율 분석")
 
 # ==========================
 # 데이터 로드
@@ -28,32 +28,6 @@ df = df.dropna(
 # ==========================
 # 지표 설명
 # ==========================
-
-st.subheader("분석에 사용된 지표")
-
-metrics_df = pd.DataFrame({
-    "지표": [
-        "총 리뷰 수",
-        "긍정 평가 비율",
-        "태그 빈도"
-    ],
-    "의미": [
-        "사용자 관심도",
-        "사용자 만족도",
-        "시장 경쟁 정도"
-    ],
-    "분석 목적": [
-        "시장 반응 측정",
-        "게임 품질 평가",
-        "레드오션 판단"
-    ]
-})
-
-st.dataframe(
-    metrics_df,
-    use_container_width=True,
-    hide_index=True
-)
 
 st.markdown("---")
 
