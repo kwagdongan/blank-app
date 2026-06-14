@@ -67,6 +67,7 @@ tag_df['고성과게임비중'] = (
     / tag_df['전체빈도']
 )
 
+tag_df = tag_df[tag_df['고성과게임비중'] > 0]
 # 기준선
 x_mean = tag_df['전체빈도'].mean()
 y_mean = tag_df['고성과게임비중'].mean()
