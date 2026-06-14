@@ -15,13 +15,13 @@ genre_counts.columns = ['태그', '빈도']
 genre_counts = genre_counts[genre_counts['태그'] != '']
 
 # 상위 8%
-q92 = genre_counts['빈도'].quantile(0.92)
+q92 = genre_counts['빈도'].quantile(0.80)
 top_group = genre_counts[genre_counts['빈도'] >= q92]
 
 # 전체 평균
 overall_avg = genre_counts['빈도'].mean()
 
-st.subheader("태그 빈도 상위 그룹 (상위 25%)")
+st.subheader("태그 빈도 상위 그룹")
 
 st.dataframe(
     top_group,
