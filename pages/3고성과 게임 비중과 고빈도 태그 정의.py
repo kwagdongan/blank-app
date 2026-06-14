@@ -4,7 +4,7 @@ import ast
 import altair as alt
 
 st.title("고성과 게임 비중과 태그별 빈도수 분석")
-
+st.markdown("---")
 # 데이터 불러오기
 df = st.session_state['df'].copy()
 
