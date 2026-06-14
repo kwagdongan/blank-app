@@ -60,17 +60,6 @@ st.markdown("""
 본 연구에서는 Steam 게임 데이터의 **태그, 리뷰 수, 긍정 평가 비율**을 활용하였다.
 """)
 
-c1, c2, c3 = st.columns(3)
-
-with c1:
-    st.metric("📊 경쟁도", "태그별 게임 수")
-
-with c2:
-    st.metric("👍 만족도", "긍정 평가 비율")
-
-with c3:
-    st.metric("🔥 관심도", "총 리뷰 수")
-
 st.markdown("""
 
 분석 절차는 다음과 같다.
