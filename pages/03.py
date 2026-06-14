@@ -17,7 +17,7 @@ genre_counts.columns = ['Genre', 'Count']
 genre_counts = genre_counts[genre_counts['Genre'] != '']
 
 # 25% 경계값 (3사분위수)
-q75 = genre_counts['Count'].quantile(0.75)
+q75 = genre_counts['Count'].quantile(0)
 
 # 상위 25% 태그만 선택
 top_quartile = genre_counts[genre_counts['Count'] >= q75]
