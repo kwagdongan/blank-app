@@ -74,7 +74,7 @@ st.info(
 # 고성과 게임 Top 5
 # ==========================
 
-st.subheader("🎮 고성과 게임 Top 5")
+st.subheader("고성과 게임 Top 5")
 
 top5 = high_perf.nlargest(5, 'total_reviews')
 
@@ -84,35 +84,11 @@ st.dataframe(
     hide_index=True
 )
 
-top5_chart = (
-    alt.Chart(top5)
-    .mark_bar()
-    .encode(
-        x=alt.X(
-            'total_reviews:Q',
-            title='총 리뷰 수'
-        ),
-        y=alt.Y(
-            'name:N',
-            sort='-x',
-            title=None
-        ),
-        tooltip=[
-            alt.Tooltip('name:N', title='게임명'),
-            alt.Tooltip('total_reviews:Q', title='총 리뷰 수', format=','),
-            alt.Tooltip('positive_percentual:Q', title='긍정 평가 비율', format='.1f')
-        ]
-    )
-    .properties(height=300)
-)
-
-st.altair_chart(top5_chart, use_container_width=True)
-
 # ==========================
 # 고성과 게임군 태그 Top 10
 # ==========================
 
-st.subheader("🏷️ 고성과 게임군 태그 Top 10")
+st.subheader("고성과 게임군 태그 Top 10")
 
 high_perf_tags = high_perf.explode('genres')
 
