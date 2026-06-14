@@ -56,7 +56,6 @@ st.info("""
 본 분석은 **Valve Corporation**에서 제공하는 **Steam Web API**를 활용하였습니다.
 - 데이터 출처: Steam Web API (https://partner.steamgames.com/doc/webapi)
 - 데이터 수집 시점: 2026년 6월
-- 본 연구 결과는 공개된 Steam API를 기반으로 작성되었으며, 특정 게임사나 밸브 코퍼레이션의 공식적인 분석 결과와는 무관함을 밝힙니다.
 """)
 
 
