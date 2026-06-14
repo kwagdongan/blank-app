@@ -3,7 +3,7 @@ import pandas as pd
 import ast
 import altair as alt
 
-st.title("고성과 태그 분석")
+st.title("고성과 게임 비중과 레드오션 태그 정의")
 
 # 데이터 불러오기
 df = st.session_state['df'].copy()
@@ -76,7 +76,7 @@ result['고성과게임수'] = result['고성과게임수'].fillna(0)
 # 7. 성공률 계산
 # -------------------------------
 
-result['고성과률(%)'] = (
+result['고성과게임비중(%)'] = (
     result['고성과게임수']
     / result['전체게임수']
     * 100
@@ -87,7 +87,7 @@ result = result[result['전체게임수'] >= 20]
 
 # 성공률 순 정렬
 result = result.sort_values(
-    by='고성과률(%)',
+    by='고성과게임비중(%)',
     ascending=False
 )
 
@@ -104,7 +104,7 @@ st.dataframe(
 
 
 st.info(
-    "고성과률 = 고성과 게임 수 / 전체 게임 수\n"
+    "고성과 게임 비중 = 고성과 게임 수 / 전체 게임 수\n"
 )
 
 
@@ -127,7 +127,7 @@ top_group = genre_counts[genre_counts['빈도'] >= q92]
 # 전체 평균
 overall_avg = genre_counts['빈도'].mean()
 
-st.subheader("태그 빈도 상위 그룹")
+st.subheader("태그 빈도 상위 그룹 (레드오션 태그)")
 
 st.dataframe(
     top_group,
