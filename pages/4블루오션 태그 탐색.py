@@ -49,15 +49,7 @@ success_games = df[
 all_genres_exploded = df.explode('genres')
 success_genres_exploded = success_games.explode('genres')
 
-# 레드오션 제거
 
-all_genres_exploded = all_genres_exploded[
-    ~all_genres_exploded['genres'].isin(red_ocean_tag)
-]
-
-success_genres_exploded = success_genres_exploded[
-    ~success_genres_exploded['genres'].isin(red_ocean_tag)
-]
 
 # -------------------------------
 # 4. 전체 게임 수
