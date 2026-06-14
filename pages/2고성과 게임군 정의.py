@@ -1,27 +1,36 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
+import altair as alt
 
+st.subheader("리뷰 수 vs 긍정 평가 비율 분석")
 
-st.subheader("리뷰 수 vs 긍정 비율 분석")
+# 데이터 로드
+df = st.session_state['df'].copy()
 
-
-# 1. 데이터 로드 및 정제
-df = st.session_state['df']
-
-# 데이터 타입이 확실하게 숫자인지 재확인
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
 df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
 
+df = df.dropna(subset=['total_reviews', 'positive_percentual'])
 
-
-# 2. 산점도 출력
-top_reviews_df = df.nlargest(500, 'total_reviews')
-
-st.scatter_chart(
-    df,
-    x='total_reviews',
-    y='positive_percentual'
+# 산점도
+chart = (
+    alt.Chart(df)
+    .mark_circle(size=40)
+    .encode(
+        x=alt.X(
+            'total_reviews:Q',
+            title='총 리뷰 수'
+        ),
+        y=alt.Y(
+            'positive_percentual:Q',
+            title='긍정 평가 비율 (%)',
+            axis=alt.Axis(
+                titleAngle=0,     # 90도 회전 제거
+                titlePadding=20
+            )
+        )
+    )
+    .properties(height=500)
 )
 
-st.write(f"분석 중인 게임 수: {len(df)}개 ")
+st.altair_chart(chart, use_container_width=True)
