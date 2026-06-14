@@ -106,7 +106,7 @@ st.dataframe(
 st.info(
     "고성과 게임 비중 = 고성과 게임 수 / 전체 게임 수\n"
 )
-
+st.markdown("각 태그별 고성과 게임의 비중이 얼마나 되는 지를 알려줌")
 
 
 st.markdown("---")
@@ -170,7 +170,7 @@ st.caption(
     f"선은 전체 태그 평균 빈도를 의미함.({overall_avg:.1f})"
 )
 
-
+st.markdown("빈도가 높은 태그는 경쟁이 높은 태그로 해석함")
 
 
 
