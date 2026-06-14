@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import ast
 
 st.set_page_config(page_title="Steam 분석", layout="wide")
 
@@ -31,15 +32,7 @@ def load_and_clean_data():
 # 데이터 로드
 df = load_and_clean_data()
 
-remove_tags = {"Indie", "Early Access", "Free to Play"}
-
-df["genres"] = df["genres"].apply(
-    lambda x: ";".join(
-        tag.strip()
-        for tag in str(x).split(";")
-        if tag.strip() not in remove_tags
-    )
-)
+EXCLUDED_TAGS = {"Indie", "Early Access", "Free to Play"}
 
 def clean_genres(genre_data):
     if pd.isna(genre_data) or genre_data == '': 
