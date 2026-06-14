@@ -15,7 +15,7 @@ genre_counts.columns = ['태그', '빈도']
 genre_counts = genre_counts[genre_counts['태그'] != '']
 
 # 상위 8%
-q92 = genre_counts['빈도'].quantile(0.92)
+q92 = genre_counts['빈도'].quantile(0.75)
 top_group = genre_counts[genre_counts['빈도'] >= q92]
 
 # 전체 평균
