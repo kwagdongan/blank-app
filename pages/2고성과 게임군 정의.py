@@ -42,4 +42,4 @@ st.altair_chart(chart, use_container_width=True)
 
 st.markdown("---")
 
-st.markdown("리뷰 수가 많고 긍정 평가 비율이 높은 게임을 고성과 게임군으로 해석함")
+st.markdown("리뷰 수가 많고 긍정 평가 비율이 높은 게임을 고성과 게임군으로 정의함")
