@@ -29,6 +29,9 @@ def clean_genres(genre_data):
 # 장르 정제 적용
 df['genres_list'] = df['genres'].apply(clean_genres)
 
+EXCLUDED_TAGS = ['Indie', 'Early Access', 'Free to Play']
+df = df.drop(columns=EXCLUDED_TAGS, errors="ignore")
+
 # 2. 데이터 펼치기
 df_genres = df.explode('genres_list')
 
