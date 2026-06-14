@@ -30,7 +30,7 @@ red_ocean_tag = (
 )
 
 st.write(
-    f"🛑 제외된 레드오션 장르 : {', '.join(red_ocean_tag)}"
+    f"🛑 제외된 레드오션 태그 : {', '.join(red_ocean_tag)}"
 )
 
 # -------------------------------
@@ -127,10 +127,6 @@ st.dataframe(
     use_container_width=True
 )
 
-st.bar_chart(
-    result.head(10)
-    .set_index('genres')['고성과률(%)']
-)
 
 st.info(
     "고성과률 = 고성과 게임 수 / 전체 게임 수\n"
