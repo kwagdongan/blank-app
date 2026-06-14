@@ -35,7 +35,7 @@ st.markdown("---")
 # 요약 통계
 # ==========================
 
-st.subheader("📈 데이터 요약")
+st.subheader("데이터 요약")
 
 c1, c2, c3 = st.columns(3)
 
@@ -88,6 +88,10 @@ with col1:
             y=alt.Y(
                 "count()",
                 title="게임 수"
+                axis=alt.Axis(
+                titleAngle=0,
+                titlePadding=20
+                )
             )
         )
         .properties(height=350)
@@ -119,6 +123,10 @@ with col2:
             y=alt.Y(
                 "count()",
                 title="게임 수"
+                axis=alt.Axis(
+                titleAngle=0,
+                titlePadding=20
+                )
             )
         )
         .properties(height=350)
