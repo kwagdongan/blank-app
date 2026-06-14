@@ -4,8 +4,20 @@ import ast
 
 st.set_page_config(page_title="Steam 분석", layout="wide")
 
+
 st.title("제목 테스트 중")
 st.write("사이드바")
+
+
+
+
+
+
+
+
+
+EXCLUDED_TAGS = {"Indie", "Early Access", "Free To Play", "Software Training", "Game Development", "Audio Production", "Utilities","Photo Editing", "Video Production", "Design & Illustration", "Sexual Content", "Nudity", "Animation & Modeling" }
+
 
 @st.cache_data
 def load_data():
@@ -14,6 +26,9 @@ def load_data():
 # 세션에 데이터가 없으면 로드해서 저장
 if 'df' not in st.session_state:
     st.session_state['df'] = load_data()
+
+# 데이터 로드
+df = load_and_clean_data()
 
 
 
@@ -26,13 +41,8 @@ def load_and_clean_data():
     # 2. total_reviews가 NaN인 행(숫자가 아니었던 행들)은 아예 삭제합니다.
     df_cleaned = df.dropna(subset=['total_reviews'])
     
-    # 3. 데이터가 잘 정제되었는지 확인하기 위해 상위 5개 출력 (디버깅용)
     return df_cleaned
 
-# 데이터 로드
-df = load_and_clean_data()
-
-EXCLUDED_TAGS = {"Indie", "Early Access", "Free To Play", "Software Training", "Game Development", "Audio Production", "Utilities","Photo Editing", "Video Production", "Design & Illustration", "Sexual Content", "Nudity", "Animation & Modeling" }
 
 def clean_genres(genre_data):
     if pd.isna(genre_data) or genre_data == '': 
