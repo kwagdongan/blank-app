@@ -160,7 +160,7 @@ st.subheader("제2사분면 태그 (블루오션 후보)")
 
 st.dataframe(
     quadrant2[
-        ['태그', '전체빈도', '고성과게임비중']
+        ['태그']
     ],
     use_container_width=True,
     hide_index=True
