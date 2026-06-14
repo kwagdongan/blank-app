@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-st.subheader("리뷰 수 vs 긍정 평가 비율 분석")
+st.subheader("고성과 게임군 정의")
 
 # 데이터 로드
 df = st.session_state['df'].copy()
