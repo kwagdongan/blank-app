@@ -27,8 +27,6 @@ def load_data():
 if 'df' not in st.session_state:
     st.session_state['df'] = load_data()
 
-# 데이터 로드
-df = load_and_clean_data()
 
 
 
@@ -42,6 +40,10 @@ def load_and_clean_data():
     df_cleaned = df.dropna(subset=['total_reviews'])
     
     return df_cleaned
+
+# 데이터 로드
+df = load_and_clean_data()
+
 
 
 def clean_genres(genre_data):
