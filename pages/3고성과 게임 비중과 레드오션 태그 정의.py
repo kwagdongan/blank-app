@@ -109,7 +109,7 @@ st.info(
 
 
 
-
+st.markdown("---")
 
 
 # 태그 펼치기
