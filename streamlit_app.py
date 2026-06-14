@@ -47,7 +47,7 @@ st.subheader("데이터 출처")
 st.markdown("""
 
 
-데이터 출처: Steam Web API (Valve Corporation)
+Steam Web API (Valve Corporation)
 """)
 
 
