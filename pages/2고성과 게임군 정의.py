@@ -39,3 +39,7 @@ chart = (
 )
 
 st.altair_chart(chart, use_container_width=True)
+
+st.markdown("---")
+
+st.markdown("리뷰 수가 많고 긍정 평가 비율이 높은 게임은 사용자 관심도와 사용자 만족도가 높은 고성과 게임군으로 해석함")
