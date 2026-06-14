@@ -7,9 +7,6 @@ st.title("장르별 게임 분포 분석")
 # 1. 데이터 로드 및 정제
 df = st.session_state['df']
 
-# 1. 데이터 로드 및 정제
-df = st.session_state['df']
-
 def clean_genres(genre_data):
     if pd.isna(genre_data) or genre_data == '':
         return []
