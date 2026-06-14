@@ -87,11 +87,7 @@ with col1:
             ),
             y=alt.Y(
                 "count()",
-                title="게임 수"
-                axis=alt.Axis(
-                titleAngle=0,
-                titlePadding=20
-                )
+                title=None
             )
         )
         .properties(height=350)
@@ -122,11 +118,7 @@ with col2:
             ),
             y=alt.Y(
                 "count()",
-                title="게임 수"
-                axis=alt.Axis(
-                titleAngle=0,
-                titlePadding=20
-                )
+                title=None
             )
         )
         .properties(height=350)
