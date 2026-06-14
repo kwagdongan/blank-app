@@ -48,8 +48,8 @@ st.markdown("---")
 # 고성과 게임군 정의
 # ==========================
 
-review_q3 = df['total_reviews'].quantile(0.75)
-positive_q3 = df['positive_percentual'].quantile(0.75)
+review_q3 = df['total_reviews'].quantile(0.5)
+positive_q3 = df['positive_percentual'].quantile(0.5)
 
 high_perf = df[
     (df['total_reviews'] >= review_q3) &
@@ -60,9 +60,9 @@ st.info(
     f"""
     고성과 게임군은
 
-    • 총 리뷰 수 상위 25% 이상
+    • 총 리뷰 수 상위 50% 이상
 
-    • 긍정 평가 비율 상위 25% 이상
+    • 긍정 평가 비율 상위 50% 이상
 
     을 동시에 만족하는 게임으로 정의함
 
