@@ -68,9 +68,12 @@ st.caption(
 
 
 
-std_freq = genre_counts['빈도'].std()
+q1 = genre_counts['빈도'].quantile(0.25)
+q3 = genre_counts['빈도'].quantile(0.75)
 
-threshold = overall_avg + std_freq
+iqr = q3 - q1
+
+threshold = q3 + 1.5 * iqr
 
 red_ocean_tags = genre_counts[
     genre_counts['빈도'] >= threshold
@@ -81,10 +84,16 @@ st.markdown("---")
 st.subheader("레드오션 태그 정의")
 
 st.write(
-    f"전체 태그 평균 빈도({overall_avg:.1f})와 "
-    f"표준편차({std_freq:.1f})를 이용하여 "
-    f"평균 + 1표준편차({threshold:.1f}) 이상인 태그를 "
-    f"레드오션 태그로 정의하였다."
+    f"""
+    태그 빈도 분포의 사분위수(IQR)를 이용하여 레드오션 태그를 정의하였다.
+
+    - 제1사분위수(Q1): {q1:.1f}
+    - 제3사분위수(Q3): {q3:.1f}
+    - IQR: {iqr:.1f}
+    - 기준값(Q3 + 1.5×IQR): {threshold:.1f}
+
+    본 연구에서는 기준값을 초과하는 태그를 레드오션 태그로 분류하였다.
+    """
 )
 
 st.success(
