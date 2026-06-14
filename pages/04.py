@@ -21,16 +21,16 @@ df = df[
 
 all_genres = df.explode('genres')
 
-red_ocean_top4 = (
+red_ocean_tag = (
     all_genres['genres']
     .value_counts()
-    .nlargest(4)
+    .nlargest(3)
     .index
     .tolist()
 )
 
 st.write(
-    f"🛑 제외된 레드오션 장르 : {', '.join(red_ocean_top4)}"
+    f"🛑 제외된 레드오션 장르 : {', '.join(red_ocean_tag)}"
 )
 
 # -------------------------------
@@ -55,11 +55,11 @@ success_genres_exploded = success_games.explode('genres')
 # 레드오션 제거
 
 all_genres_exploded = all_genres_exploded[
-    ~all_genres_exploded['genres'].isin(red_ocean_top4)
+    ~all_genres_exploded['genres'].isin(red_ocean_tag)
 ]
 
 success_genres_exploded = success_genres_exploded[
-    ~success_genres_exploded['genres'].isin(red_ocean_top4)
+    ~success_genres_exploded['genres'].isin(red_ocean_tag)
 ]
 
 # -------------------------------
@@ -134,5 +134,5 @@ st.bar_chart(
 
 st.info(
     "성공률 = 성공 게임 수 / 전체 게임 수\n"
-    "레드오션 상위 4개 장르는 제외 후 계산"
+    "레드오션 상위 25% 장르는 제외 후 계산"
 )
