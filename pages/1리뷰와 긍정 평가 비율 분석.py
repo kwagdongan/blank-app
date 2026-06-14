@@ -68,7 +68,7 @@ col1, col2 = st.columns(2)
 # 리뷰 수
 with col1:
 
-    st.subheader("🔥 총 리뷰 수 분포")
+    st.subheader("총 리뷰 수 분포")
 
     review_df = pd.DataFrame({
         "log_reviews": np.log10(
@@ -99,13 +99,13 @@ with col1:
     )
 
     st.caption(
-        "리뷰 수는 사용자 관심도를 의미하며, 값의 편차가 커 로그 변환 후 시각화하였다."
+        "리뷰 수는 사용자 관심도를 의미하며, 값의 편차가 커 로그 변환 후 시각화함."
     )
 
 # 긍정 비율
 with col2:
 
-    st.subheader("👍 긍정 평가 비율 분포")
+    st.subheader("긍정 평가 비율 분포")
 
     positive_chart = (
         alt.Chart(df)
@@ -130,7 +130,7 @@ with col2:
     )
 
     st.caption(
-        "긍정 평가 비율은 사용자 만족도를 의미한다."
+        "긍정 평가 비율은 사용자 만족도를 의미함"
     )
 
 st.markdown("---")
