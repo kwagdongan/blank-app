@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-st.subheader("고성과 게임군 정의")
-
+st.title("고성과 게임군 정의")
+st.markdown("---")
 # 데이터 로드
 df = st.session_state['df'].copy()
 
