@@ -24,4 +24,4 @@ st.scatter_chart(
     y='positive_percentual'
 )
 
-st.write(f"분석 중인 게임 수: {len(filtered_df)}개 ")
+st.write(f"분석 중인 게임 수: {len(df)}개 ")
