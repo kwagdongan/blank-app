@@ -3,7 +3,7 @@ import pandas as pd
 import ast
 import altair as alt
 
-st.title("고성과 게임 비중과 레드오션 태그 정의")
+st.title("고성과 게임 비중과 태그별 빈도수 분석")
 
 # 데이터 불러오기
 df = st.session_state['df'].copy()
@@ -127,7 +127,7 @@ top_group = genre_counts[genre_counts['빈도'] >= q92]
 # 전체 평균
 overall_avg = genre_counts['빈도'].mean()
 
-st.subheader("태그 빈도 상위 그룹 (레드오션 태그)")
+st.subheader("태그 빈도 상위 그룹")
 
 st.dataframe(
     top_group,
