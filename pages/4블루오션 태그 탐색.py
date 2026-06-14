@@ -112,7 +112,7 @@ result = result[result['전체게임수'] >= 20]
 
 # 성공률 순 정렬
 result = result.sort_values(
-    by='성공률(%)',
+    by='고성과률(%)',
     ascending=False
 )
 
