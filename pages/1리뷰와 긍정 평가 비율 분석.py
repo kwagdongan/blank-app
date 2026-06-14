@@ -81,7 +81,7 @@ with col1:
         .mark_bar()
         .encode(
             x=alt.X(
-                "log_reviews:Q"",
+                "log_reviews:Q",
                 bin=alt.Bin(maxbins=30),
                 title="log10(총 리뷰 수)"
             ),
