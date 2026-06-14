@@ -6,6 +6,8 @@ import numpy as np
 st.subheader("리뷰 수 vs 긍정 비율 분석")
 
 
+# 1. 데이터 로드 및 정제
+df = st.session_state['df']
 
 # 데이터 타입이 확실하게 숫자인지 재확인
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
