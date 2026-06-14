@@ -9,10 +9,10 @@ st.title("장르별 게임 분포 분석")
 df = st.session_state['df']
 
 # 2. 데이터 펼치기
-df_genres = df.explode('genres_list')
+df_genres = df.explode('genres')
 
 # 3. 빈도 분석
-genre_counts = df_genres['genres_list'].value_counts().reset_index()
+genre_counts = df_genres['genres'].value_counts().reset_index()
 genre_counts.columns = ['Genre', 'Count']
 genre_counts = genre_counts[genre_counts['Genre'] != ''] # 빈 값 제거
 
