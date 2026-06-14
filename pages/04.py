@@ -1,40 +1,138 @@
 import streamlit as st
 import pandas as pd
-import ast
 
-st.title("진정한 블루오션 장르 발굴 (상위 4개 제외)")
+st.title("블루오션 장르 발굴")
 
-# 1. 데이터 로드 및 정제
-df = st.session_state['df']
+# 데이터 불러오기
+df = st.session_state['df'].copy()
 
+# 숫자형 변환
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
 df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
-df = df[(df['total_reviews'] > 0) & (df['positive_percentual'] > 0)].copy()
 
+df = df[
+    (df['total_reviews'] > 0) &
+    (df['positive_percentual'] > 0)
+].copy()
 
-# 2. [확정] 전체 시장 기준 레드오션 Top 5 추출
-all_genres_exploded = df.explode('genres')
-red_ocean_top4 = all_genres_exploded['genres'].value_counts().nlargest(4).index.tolist()
+# -------------------------------
+# 1. 레드오션 장르 추출
+# -------------------------------
 
-st.write(f"🛑 **레드오션으로 분류되어 제외된 장르(Top 4):** {', '.join(red_ocean_top4)}")
+all_genres = df.explode('genres')
 
-# 3. 제1사분면(성공군) 데이터 추출
+red_ocean_top4 = (
+    all_genres['genres']
+    .value_counts()
+    .nlargest(4)
+    .index
+    .tolist()
+)
+
+st.write(
+    f"🛑 제외된 레드오션 장르 : {', '.join(red_ocean_top4)}"
+)
+
+# -------------------------------
+# 2. 성공 게임 정의
+# -------------------------------
+
 review_q3 = df['total_reviews'].quantile(0.75)
 positive_q3 = df['positive_percentual'].quantile(0.75)
-q1_games = df[(df['total_reviews'] >= review_q3) & (df['positive_percentual'] >= positive_q3)].copy()
 
-# 4. 성공군 데이터에서 레드오션 장르를 제외한 장르만 필터링
-q1_genres_exploded = q1_games.explode('genres')
-blue_ocean_candidates = q1_genres_exploded[~q1_genres_exploded['genres'].isin(red_ocean_top4)]
+success_games = df[
+    (df['total_reviews'] >= review_q3) &
+    (df['positive_percentual'] >= positive_q3)
+].copy()
 
-# 5. 빈도수 및 평균 긍정 비율 계산 (결과 정렬)
-result = blue_ocean_candidates.groupby('genres').agg(
-    성공_게임수=('name', 'count'),
-    평균_긍정비율=('positive_percentual', 'mean')
-).sort_values(by='성공_게임수', ascending=False)
+# -------------------------------
+# 3. 장르 펼치기
+# -------------------------------
 
-# 6. 결과 출력
-st.subheader("발굴된 블루오션 장르 (레드오션 Top 4 제외)")
-st.dataframe(result, use_container_width=True)
+all_genres_exploded = df.explode('genres')
+success_genres_exploded = success_games.explode('genres')
 
-st.write("💡 **해석:** 위 장르들은 가장 대중적인 4개 장르에 속하지 않으면서, 동시에 성공한 게임군에서 자주 발견되는 가치 있는 장르들입니다.")
+# 레드오션 제거
+
+all_genres_exploded = all_genres_exploded[
+    ~all_genres_exploded['genres'].isin(red_ocean_top4)
+]
+
+success_genres_exploded = success_genres_exploded[
+    ~success_genres_exploded['genres'].isin(red_ocean_top4)
+]
+
+# -------------------------------
+# 4. 전체 게임 수
+# -------------------------------
+
+total_count = (
+    all_genres_exploded
+    .groupby('genres')
+    .size()
+    .reset_index(name='전체게임수')
+)
+
+# -------------------------------
+# 5. 성공 게임 수
+# -------------------------------
+
+success_count = (
+    success_genres_exploded
+    .groupby('genres')
+    .size()
+    .reset_index(name='성공게임수')
+)
+
+# -------------------------------
+# 6. 병합
+# -------------------------------
+
+result = pd.merge(
+    total_count,
+    success_count,
+    on='genres',
+    how='left'
+)
+
+result['성공게임수'] = result['성공게임수'].fillna(0)
+
+# -------------------------------
+# 7. 성공률 계산
+# -------------------------------
+
+result['성공률(%)'] = (
+    result['성공게임수']
+    / result['전체게임수']
+    * 100
+)
+
+# 표본 너무 적은 장르 제거
+result = result[result['전체게임수'] >= 20]
+
+# 성공률 순 정렬
+result = result.sort_values(
+    by='성공률(%)',
+    ascending=False
+)
+
+# -------------------------------
+# 8. 출력
+# -------------------------------
+
+st.subheader("블루오션 장르 순위")
+
+st.dataframe(
+    result.head(20),
+    use_container_width=True
+)
+
+st.bar_chart(
+    result.head(10)
+    .set_index('genres')['성공률(%)']
+)
+
+st.info(
+    "성공률 = 성공 게임 수 / 전체 게임 수\n"
+    "레드오션 상위 4개 장르는 제외 후 계산"
+)
