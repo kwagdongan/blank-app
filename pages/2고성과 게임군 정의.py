@@ -6,14 +6,6 @@ import numpy as np
 st.subheader("리뷰 수 vs 긍정 비율 분석")
 
 
-df = st.session_state['df']
-
-# 4. 평가 많은 순 상위 10개 추출
-top10_games = df.nlargest(10, 'total_reviews')[['name', 'total_reviews']]
-
-st.dataframe(top10_games)
-
-
 
 # 데이터 타입이 확실하게 숫자인지 재확인
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
