@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import ast
 
 st.title("고성과 태그 분석")
 
@@ -104,3 +105,81 @@ st.dataframe(
 st.info(
     "고성과률 = 고성과 게임 수 / 전체 게임 수\n"
 )
+
+
+
+
+
+
+# 태그 펼치기
+df_genres = df.explode('genres')
+
+# 빈도 계산
+genre_counts = df_genres['genres'].value_counts().reset_index()
+genre_counts.columns = ['태그', '빈도']
+genre_counts = genre_counts[genre_counts['태그'] != '']
+
+# 상위 8%
+q92 = genre_counts['빈도'].quantile(0.66)
+top_group = genre_counts[genre_counts['빈도'] >= q92]
+
+# 전체 평균
+overall_avg = genre_counts['빈도'].mean()
+
+st.subheader("태그 빈도 상위 그룹")
+
+st.dataframe(
+    top_group,
+    use_container_width=True,
+    hide_index=True
+)
+
+# 막대그래프
+bars = alt.Chart(top_group).mark_bar().encode(
+    x=alt.X(
+        '빈도:Q',
+        title='등장 빈도'
+    ),
+    y=alt.Y(
+        '태그:N',
+        sort='-x',
+        title=None
+    )
+)
+
+# 평균선
+avg_line = alt.Chart(
+    pd.DataFrame({'평균': [overall_avg]})
+).mark_rule().encode(
+    x='평균:Q'
+)
+
+chart = (
+    bars + avg_line
+).properties(
+    height=400
+)
+
+st.altair_chart(
+    chart,
+    use_container_width=True
+)
+
+st.caption(
+    f"선은 전체 태그 평균 빈도를 의미함.({overall_avg:.1f})"
+)
+
+
+
+
+
+q1 = genre_counts['빈도'].quantile(0.25)
+q3 = genre_counts['빈도'].quantile(0.75)
+
+iqr = q3 - q1
+
+threshold = q3 + 1.5 * iqr
+
+red_ocean_tags = genre_counts[
+    genre_counts['빈도'] >= threshold
+]['태그'].tolist()
