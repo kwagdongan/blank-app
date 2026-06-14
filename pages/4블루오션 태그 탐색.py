@@ -12,23 +12,7 @@ df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coe
 
 
 
-# -------------------------------
-# 1. 레드오션 장르 추출
-# -------------------------------
 
-all_genres = df.explode('genres')
-
-red_ocean_tag = (
-    all_genres['genres']
-    .value_counts()
-    .nlargest(3)
-    .index
-    .tolist()
-)
-
-st.write(
-    f"제외된 레드오션 태그 : {', '.join(red_ocean_tag)}"
-)
 
 # -------------------------------
 # 2. 성공 게임 정의
