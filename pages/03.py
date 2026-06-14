@@ -14,15 +14,16 @@ df_genres = df.explode('genres')
 # 3. 빈도 분석
 genre_counts = df_genres['genres'].value_counts().reset_index()
 genre_counts.columns = ['Genre', 'Count']
-genre_counts = genre_counts[genre_counts['Genre'] != ''] # 빈 값 제거
+genre_counts = genre_counts[genre_counts['Genre'] != '']
 
-# 4. 결과 출력
-st.subheader("장르별 게임 수 Top 5")
-st.dataframe(genre_counts.head(5), use_container_width=True)
+# 25% 경계값 (3사분위수)
+q75 = genre_counts['Count'].quantile(0.75)
 
-# 5. 시각화
-st.bar_chart(genre_counts.head(5).set_index('Genre'))
+# 상위 25% 태그만 선택
+top_quartile = genre_counts[genre_counts['Count'] >= q75]
 
+st.subheader("태그 빈도 상위 25% (1분위 그룹)")
 
+st.dataframe(top_quartile, use_container_width=True)
 
-
+st.bar_chart(top_quartile.set_index('Genre'))
