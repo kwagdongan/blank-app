@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-
+st.title("블루오션 후보 태그 분석")
+st.markdown("---")
 st.subheader("태그 포지셔닝 맵")
 
 df = st.session_state['df'].copy()
