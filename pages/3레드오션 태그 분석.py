@@ -61,6 +61,32 @@ st.altair_chart(
 )
 
 st.caption(
-    f"빨간 선은 전체 태그 평균 빈도를 의미함.({overall_avg:.1f})"
+    f"선은 전체 태그 평균 빈도를 의미함.({overall_avg:.1f})"
 )
-st.markdown("태그 빈도 상위 25%를 경쟁이 심한 레드오션 태그로 정의함")
+
+
+
+
+
+std_freq = genre_counts['빈도'].std()
+
+threshold = overall_avg + std_freq
+
+red_ocean_tags = genre_counts[
+    genre_counts['빈도'] >= threshold
+]['태그'].tolist()
+
+st.markdown("---")
+
+st.subheader("레드오션 태그 정의")
+
+st.write(
+    f"전체 태그 평균 빈도({overall_avg:.1f})와 "
+    f"표준편차({std_freq:.1f})를 이용하여 "
+    f"평균 + 1표준편차({threshold:.1f}) 이상인 태그를 "
+    f"레드오션 태그로 정의하였다."
+)
+
+st.success(
+    f"레드오션 태그: {', '.join(red_ocean_tags)}"
+)
