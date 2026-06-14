@@ -107,8 +107,10 @@ with col2:
 
     st.subheader("긍정 평가 비율 분포 (사용자 만족도로 해석)")
 
+    positive_df = df[df['positive_percentual'] > 0]
+    
     positive_chart = (
-        alt.Chart(df)
+        alt.Chart(positive_df)
         .mark_bar()
         .encode(
             x=alt.X(
