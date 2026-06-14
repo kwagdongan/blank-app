@@ -123,7 +123,7 @@ result = result.sort_values(
 st.subheader("블루오션 장르 순위")
 
 st.dataframe(
-    result.head(20),
+    result.head(10),
     use_container_width=True
 )
 
