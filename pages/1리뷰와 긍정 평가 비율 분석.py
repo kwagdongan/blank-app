@@ -70,18 +70,13 @@ with col1:
 
     st.subheader("총 리뷰 수 분포")
 
-    review_df = pd.DataFrame({
-        "log_reviews": np.log10(
-            df['total_reviews'] + 1
-        )
-    })
 
     review_chart = (
-        alt.Chart(review_df)
+        alt.Chart(df)
         .mark_bar()
         .encode(
             x=alt.X(
-                "log_reviews:Q",
+                "total_reviews:Q",
                 bin=alt.Bin(maxbins=30),
                 title="log10(총 리뷰 수)"
             ),
@@ -140,7 +135,7 @@ st.markdown("---")
 # ==========================
 
 st.info("""
-### 표1 분석 기준
+### 분석 기준
 - 총 리뷰 수 → 사용자 관심도
 - 긍정 평가 비율 → 사용자 만족도
 
