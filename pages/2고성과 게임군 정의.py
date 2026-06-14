@@ -23,7 +23,7 @@ chart = (
         ),
         y=alt.Y(
             'positive_percentual:Q',
-            title='긍정 평가 비율 (%)',
+            title='긍정 평가 비율',
             axis=alt.Axis(
                 titleAngle=0,
                 titlePadding=20
