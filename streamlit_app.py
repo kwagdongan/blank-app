@@ -31,8 +31,16 @@ def load_and_clean_data():
 # 데이터 로드
 df = load_and_clean_data()
 
-EXCLUDED_TAGS = ['Indie', 'Early Access', 'Free to Play']
-df = df.drop(columns=EXCLUDED_TAGS, errors="ignore")
+remove_tags = {"Indie", "Early Access", "Free to Play"}
+
+df["genres"] = df["genres"].apply(
+    lambda x: ";".join(
+        tag.strip()
+        for tag in str(x).split(";")
+        if tag.strip() not in remove_tags
+    )
+)
+
 def clean_genres(genre_data):
     if pd.isna(genre_data) or genre_data == '': 
         return []
