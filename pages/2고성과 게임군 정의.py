@@ -13,10 +13,10 @@ df = st.session_state['df']
 df['total_reviews'] = pd.to_numeric(df['total_reviews'], errors='coerce')
 df['positive_percentual'] = pd.to_numeric(df['positive_percentual'], errors='coerce')
 
-filtered_df = df[(df['total_reviews'] > 0) & (df['positive_percentual'] > 0)].copy()
+
 
 # 2. 산점도 출력
-top_reviews_df = filtered_df.nlargest(500, 'total_reviews')
+top_reviews_df = df.nlargest(500, 'total_reviews')
 
 st.scatter_chart(
     filtered_df,
