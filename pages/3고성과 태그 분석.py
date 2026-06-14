@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-st.title("블루오션 장르 발굴")
+st.title("고성과 태그 분석")
 
 # 데이터 불러오기
 df = st.session_state['df'].copy()
@@ -93,7 +93,7 @@ result = result.sort_values(
 # 8. 출력
 # -------------------------------
 
-st.subheader("블루오션 장르 순위")
+st.subheader("고성과 태그 순위")
 
 st.dataframe(
     result.head(10),
