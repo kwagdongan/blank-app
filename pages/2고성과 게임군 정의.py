@@ -56,7 +56,7 @@ high_perf = df[
     (df['positive_percentual'] >= positive_q3)
 ].copy()
 
-st.info(
+st.markdown(
     f"""
     고성과 게임군은
 
