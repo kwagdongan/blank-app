@@ -81,7 +81,7 @@ success_count = (
     success_genres_exploded
     .groupby('genres')
     .size()
-    .reset_index(name='성공게임수')
+    .reset_index(name='고성과게임수')
 )
 
 # -------------------------------
@@ -95,14 +95,14 @@ result = pd.merge(
     how='left'
 )
 
-result['성공게임수'] = result['성공게임수'].fillna(0)
+result['고성과게임수'] = result['고성과게임수'].fillna(0)
 
 # -------------------------------
 # 7. 성공률 계산
 # -------------------------------
 
-result['성공률(%)'] = (
-    result['성공게임수']
+result['고성과률(%)'] = (
+    result['고성게임수']
     / result['전체게임수']
     * 100
 )
@@ -129,10 +129,9 @@ st.dataframe(
 
 st.bar_chart(
     result.head(10)
-    .set_index('genres')['성공률(%)']
+    .set_index('genres')['고성과률(%)']
 )
 
 st.info(
-    "성공률 = 성공 게임 수 / 전체 게임 수\n"
-    "레드오션 상위 25% 장르는 제외 후 계산"
+    "고성과률 = 고성과 게임 수 / 전체 게임 수\n"
 )
