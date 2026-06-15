@@ -96,14 +96,9 @@ st.altair_chart(
     use_container_width=True
 )
 
-    st.altair_chart(
-        review_chart,
-        use_container_width=True
-    )
+    
 
-    st.caption(
-        "총 리뷰수 값의 편차가 커 로그 변환 후 시각화"
-    )
+    
 
 # 긍정 비율
 with col2:
