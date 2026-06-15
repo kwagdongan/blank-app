@@ -71,8 +71,8 @@ with col1:
     st.subheader("총 리뷰 수 분포 (사용자 관심도로 해석)")
 
     review_df = pd.DataFrame({
-        "log_reviews": np.log10(
-            df['total_reviews'] + 1
+        "log_reviews": 
+            df['total_reviews']
         )
     })
 
