@@ -70,12 +70,23 @@ with col1:
 
     st.subheader("총 리뷰 수 분포 (사용자 관심도로 해석)")
 
-review_df = pd.DataFrame({
-    "total_reviews": df['total_reviews']
-})
+# 1. 슬라이더 추가: 리뷰 수 상한값 조절
+# 데이터의 최대값을 슬라이더의 기본값으로 설정
+max_review = int(df['total_reviews'].max())
+selected_max = st.slider(
+    "리뷰 수 표시 범위 조절 (상한선)", 
+    min_value=100, 
+    max_value=max_review, 
+    value=max_review // 10, # 처음에는 전체의 1/10 정도로 좁게 보여줌
+    step=100
+)
 
+# 2. 데이터 필터링
+filtered_df = df[df['total_reviews'] <= selected_max]
+
+# 3. 차트 생성
 review_chart = (
-    alt.Chart(review_df)
+    alt.Chart(filtered_df)
     .mark_bar()
     .encode(
         x=alt.X(
