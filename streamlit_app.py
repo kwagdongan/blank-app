@@ -114,5 +114,6 @@ def clean_genres(genre_data):
 
 # 덮어쓰기 (중요: 여기서 genres 컬럼 자체를 리스트 값으로 바꿔버림)
 df['genres'] = df['genres'].apply(clean_genres)
+df = df.nlargest(10000, 'total_reviews')
 st.session_state['df'] = df
 
