@@ -50,7 +50,7 @@ review_percentile = st.sidebar.slider(
     "리뷰 수 기준 백분위 (%)",
     min_value=50,
     max_value=95,
-    value=50,
+    value=75,
     step=5
 )
 
