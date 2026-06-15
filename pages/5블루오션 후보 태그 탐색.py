@@ -358,7 +358,7 @@ points = (
             '고성과게임비중:Q',
             title='태그별 고성과 게임 비중'
         ),
-        color='cluster:N',  # [핵심] 군집별 색상 구분
+        color='cluster_name:N',  # [핵심] 군집별 색상 구분
         tooltip=[
             alt.Tooltip('태그:N'),
             alt.Tooltip('전체빈도:Q', format=','),
