@@ -383,9 +383,16 @@ text = (
 )
 
 
-chart = (
-    points +
-    text )
+chart = (points +
+    text +
+    vline +
+    hline
+).properties(
+    width=600,   # 가로 폭 고정
+    height=600   # 세로 높이를 가로와 동일하게 설정
+).configure_axis(
+    grid=True
+)
     
 
 st.altair_chart(
