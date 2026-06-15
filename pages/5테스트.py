@@ -376,13 +376,15 @@ st.dataframe(
     hide_index=True
 )
 
-high_perf_df = df[
-    (df['positive_percentual'] >= min_positive_rate) & 
-    (df['total_reviews'] >= min_reviews)
-]
+st.info("""
+결론적으로 제2사분면에 포함되는 태그들을 블루오션 후보로 해석할 수 있다.
+""")
+
+
+
 
 total_games = len(df)
-high_perf_count = len(high_perf_df)
+high_perf_count = len(high_perf)
 high_perf_ratio = (high_perf_count / total_games) * 100 if total_games > 0 else 0
 
 
@@ -394,6 +396,4 @@ st.sidebar.metric("고성과 게임 비율", f"{high_perf_ratio:.1f}%")
 st.sidebar.markdown("---")
 
 
-st.info("""
-제2사분면에 포함되는 태그들을 블루오션 후보로 해석할 수 있다.
-""")
+
