@@ -206,31 +206,7 @@ high_perf = df[
     (df['positive_percentual'] >= positive_threshold)
 ].copy()
 
-# -------------------
-# 기준 표시
-# -------------------
 
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.metric(
-        "리뷰 수 기준",
-        f"{review_threshold:,.0f}"
-    )
-
-with col2:
-    st.metric(
-        "긍정 평가 기준",
-        f"{positive_threshold:.1f}%"
-    )
-
-with col3:
-    st.metric(
-        "기준치 이상 게임 수",
-        len(high_perf)
-    )
-
-st.markdown("---")
 
 # -------------------
 # 산점도
@@ -337,7 +313,7 @@ tag_chart = (
 
 
 
-st.markdown("---")
+
 st.subheader("태그 포지셔닝 맵")
 
 
