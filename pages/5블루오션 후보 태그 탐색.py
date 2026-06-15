@@ -4,11 +4,11 @@ import altair as alt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-st.title("고성과 게임군 기준 정의")
+st.title("기준치 이상 게임군 정의")
 
 st.markdown("""
 사용자가 직접 리뷰 수와 긍정 평가 비율 기준을 조정하여
-고성과 게임군이 어떻게 변화하는지 확인할 수 있습니다.
+게임군이 어떻게 변화하는지 확인할 수 있습니다.
 """)
 
 # -------------------
@@ -43,7 +43,7 @@ df = df.dropna(
 # 슬라이더
 # -------------------
 
-st.sidebar.header("고성과 게임군 기준 설정")
+st.sidebar.header("기준치 이상 게임군 설정")
 
 review_percentile = st.sidebar.slider(
     "리뷰 수 기준 백분위 (%)",
@@ -103,7 +103,7 @@ with col2:
 
 with col3:
     st.metric(
-        "고성과 게임 수",
+        "기준치 이상 게임 수",
         len(high_perf)
     )
 
@@ -113,7 +113,7 @@ st.markdown("---")
 # 산점도
 # -------------------
 
-st.subheader("리뷰수와 긍정 평가 비율 분포 (고성과 게임군 비율 분포)")
+st.subheader("리뷰수와 긍정 평가 비율 분포 (기준치 이상 게임군 비율 분포)")
 
 base = alt.Chart(df).mark_circle(
     size=40,
@@ -180,7 +180,7 @@ st.altair_chart(
 )
 
 
-st.markdown("고성과 게임군의 태그 비중")
+st.markdown("기준치 이상 게임군의 태그 비중")
 
 high_perf_tags = high_perf.explode('genres')
 
@@ -219,7 +219,7 @@ st.altair_chart(tag_chart, use_container_width=True)
 
 st.info(
     """
-    슬라이더를 조정하면 고성과 게임군의 기준이 변경되며,
+    슬라이더를 조정하면 기준치 이상 게임군의 기준이 변경되며,
     이에 따라 포함되는 게임과 게임 수가 실시간으로 변합니다.
     """
 )
@@ -350,7 +350,7 @@ points = (
         tooltip=[
             alt.Tooltip('태그:N'),
             alt.Tooltip('전체빈도:Q', format=','),
-            alt.Tooltip('태그별고성과게임비중:Q', format='.3f')
+            alt.Tooltip('태그별기준치이상게임비중:Q', format='.3f')
         ]
     )
 )
@@ -395,7 +395,7 @@ st.altair_chart(
     use_container_width=True
 )
 
-st.info("태그별 고성과 게임 비율 = 고성과 게임수/전체 게임수")
+st.info("태그별 기준치 이상 게임 비율 = 기준치 이상 게임수/전체 게임수")
 
 with st.expander("포지셔닝 맵 해석 가이드"):
     st.write("""
@@ -427,8 +427,8 @@ high_perf_ratio = (high_perf_count / total_games) * 100 if total_games > 0 else 
 # 4. 사이드바에 지표 표시
 st.sidebar.markdown("---")
 st.sidebar.metric("전체 분석 대상", f"{total_games:,}개")
-st.sidebar.metric("고성과 게임 수", f"{high_perf_count:,}개")
-st.sidebar.metric("고성과 게임 비율", f"{high_perf_ratio:.1f}%")
+st.sidebar.metric("기준치 이상 게임 수", f"{high_perf_count:,}개")
+st.sidebar.metric("기준치 이상 게임 비율", f"{high_perf_ratio:.1f}%")
 st.sidebar.markdown("---")
 
 
