@@ -57,7 +57,8 @@ st.info("""
 
 
 
-EXCLUDED_TAGS = {"Indie", "Early Access", "Free To Play", "Software Training", "Game Development", "Audio Production", "Utilities","Photo Editing", "Video Production", "Design & Illustration", "Sexual Content", "Nudity", "Animation & Modeling", "Web Publishing", "0"}
+EXCLUDED_TAGS = {"Indie", "Early Access", "Free To Play", "Software Training", "Game Development", "Audio Production", "Utilities","Photo Editing", "Video Production", 
+                 "Design & Illustration", "Sexual Content", "Nudity", "Animation & Modeling", "Web Publishing", "0", "83", "87", "84"}
 
 
 @st.cache_data
