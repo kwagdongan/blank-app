@@ -382,7 +382,7 @@ text = (
     )
 )
 
-/*
+
 chart = (points +
     text +
     vline +
@@ -391,7 +391,7 @@ chart = (points +
     width=600,   # 가로 폭 고정
     height=600   # 세로 높이를 가로와 동일하게 설정
 )
-*/
+
 
 
 chart = chart.encode(
