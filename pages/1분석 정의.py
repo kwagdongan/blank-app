@@ -105,7 +105,7 @@ st.altair_chart(
     use_container_width=True
 )
     
-st.markdown("리뷰수는 게임에 대한 의견 제출이므로 사용자의 관심도로 해석할 수 있음")
+st.markdown("리뷰수는 게임에 대한 의견 제출이므로 사용자의 관심도로 해석할 수 있습니다.")
     
 
 # 긍정 비율
@@ -134,7 +134,7 @@ positive_chart,
 use_container_width=True
     )
 st.markdown("""
-리뷰의 긍정 평가 비율은 게임에 대한 만족도이므로 사용자 만족도로 해석할 수 있음
+리뷰의 긍정 평가 비율은 게임에 대한 만족도이므로 사용자 만족도로 해석할 수 있습니다.
 """)
     
 
@@ -198,7 +198,7 @@ st.caption(
     f"선은 전체 태그 평균 빈도를 의미함.({overall_avg:.1f})"
 )
 
-st.markdown("빈도가 높은 태그는 경쟁이 높은 태그로 해석함")
+st.markdown("빈도가 높은 태그는 경쟁이 높은 태그로 해석합니다.")
 
 
 
