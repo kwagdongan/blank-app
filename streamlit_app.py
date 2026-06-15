@@ -507,16 +507,21 @@ st.write("""
     우측으로 갈 수록 경쟁 정도가 강해지며, 상단으로 갈 수록 리뷰의 많고 높음이 강해집니다.
     """)
 
-# 클러스터별 데이터 요약 (인덱스 및 통계 정보)
 cluster_summary = tag_df.groupby('cluster').agg({
     '태그': list,
     '전체빈도': ['mean'],
-    '리뷰가 높고 많은 게임 비중': ['mean']
+    '고성과게임비중': ['mean']  # 실제 데이터프레임에 있는 컬럼명 사용
 })
 
+# 2. 출력할 때만 이름을 예쁘게 변경 (rename 사용)
+cluster_summary = cluster_summary.rename(columns={
+    '고성과게임비중': '리뷰가 높고 많은 게임 비중'
+})
 
-# 인덱스 값 확인
+# 표 출력
 st.write(cluster_summary)
+
+
 
 
 
