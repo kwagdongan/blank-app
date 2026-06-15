@@ -68,10 +68,11 @@ col1, col2 = st.columns(2)
 # 리뷰 수
 with col1:
 
-    st.subheader("총 리뷰 수 분포 (사용자 관심도로 해석)")
+    st.subheader("총 리뷰 수 분포 (로그 스케일 적용)")
 
+# 로그 스케일 적용을 위해 0인 데이터는 아주 작은 값으로 치환 (로그(0)은 정의되지 않음)
 review_df = pd.DataFrame({
-    "total_reviews": df['total_reviews']
+    "total_reviews": df['total_reviews'].replace(0, 0.1) 
 })
 
 review_chart = (
@@ -80,8 +81,9 @@ review_chart = (
     .encode(
         x=alt.X(
             "total_reviews:Q",
-            bin=alt.Bin(maxbins=30),
-            title="총 리뷰 수"
+            bin=alt.Bin(maxbins=50), # 구간을 좀 더 세밀하게 조정
+            scale=alt.Scale(type='log'), # [핵심] 로그 스케일 적용
+            title="총 리뷰 수 (Log Scale)"
         ),
         y=alt.Y(
             "count()",
