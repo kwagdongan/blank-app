@@ -37,16 +37,16 @@ st.sidebar.header("고성과 게임군 기준 설정")
 
 review_percentile = st.sidebar.slider(
     "리뷰 수 기준 백분위 (%)",
-    min_value=0,
-    max_value=100,
+    min_value=5,
+    max_value=95,
     value=50,
     step=5
 )
 
 positive_percentile = st.sidebar.slider(
     "긍정 평가 비율 기준 백분위 (%)",
-    min_value=0,
-    max_value=100,
+    min_value=5,
+    max_value=95,
     value=50,
     step=5
 )
