@@ -103,7 +103,7 @@ st.markdown("---")
 # 산점도
 # -------------------
 
-st.subheader("고성과 게임군 분포")
+st.subheader("리뷰수와 긍정 평가 비율 분포")
 
 base = alt.Chart(df).mark_circle(
     size=40,
@@ -169,36 +169,7 @@ st.altair_chart(
     use_container_width=True
 )
 
-# -------------------
-# 상위 게임 출력
-# -------------------
 
-st.subheader("고성과 게임 Top 20")
-
-top_games = high_perf.nlargest(
-    20,
-    'total_reviews'
-)
-
-display_df = top_games[
-    [
-        'name',
-        'total_reviews',
-        'positive_percentual'
-    ]
-].copy()
-
-display_df.columns = [
-    '게임명',
-    '총 리뷰 수',
-    '긍정 평가 비율'
-]
-
-st.dataframe(
-    display_df,
-    use_container_width=True,
-    hide_index=True
-)
 
 st.info(
     """
