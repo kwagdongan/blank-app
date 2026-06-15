@@ -8,7 +8,7 @@ import altair as alt
 st.set_page_config(page_title="Steam 분석", layout="wide")
 
 
-st.title("Steam 게임 시장의 빈도와 리뷰 데이터를 이용한 장르 군집 분석")
+st.title("Steam 게임 시장 데이터를 이용한 장르 군집 분석")
 
 st.markdown("---")
 
