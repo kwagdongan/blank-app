@@ -376,6 +376,18 @@ st.dataframe(
     hide_index=True
 )
 
+total_games = len(df)
+high_perf_count = len(high_perf_df)
+high_perf_ratio = (high_perf_count / total_games) * 100 if total_games > 0 else 0
+
+
+# 4. 사이드바에 지표 표시
+st.sidebar.markdown("---")
+st.sidebar.metric("전체 분석 대상", f"{total_games:,}개")
+st.sidebar.metric("고성과 게임 수", f"{high_perf_count:,}개")
+st.sidebar.metric("고성과 게임 비율", f"{high_perf_ratio:.1f}%")
+st.sidebar.markdown("---")
+
 
 st.info("""
 제2사분면에 포함되는 태그들을 블루오션 후보로 해석할 수 있다.
