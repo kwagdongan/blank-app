@@ -169,6 +169,39 @@ st.altair_chart(
     use_container_width=True
 )
 
+igh_perf_tags = high_perf.explode('genres')
+
+tag_counts = (
+    high_perf_tags['genres']
+    .value_counts()
+    .head(10)
+    .reset_index()
+)
+
+tag_counts.columns = ['태그', '게임 수']
+
+tag_chart = (
+    alt.Chart(tag_counts)
+    .mark_bar()
+    .encode(
+        x=alt.X(
+            '게임 수:Q',
+            title='게임 수'
+        ),
+        y=alt.Y(
+            '태그:N',
+            sort='-x',
+            title=None
+        ),
+        tooltip=[
+            '태그',
+            '게임 수'
+        ]
+    )
+    .properties(height=350)
+)
+
+st.altair_chart(tag_chart, use_container_width=True)
 
 
 st.info(
