@@ -57,8 +57,20 @@ st.info("""
 
 
 
-EXCLUDED_TAGS = {"Indie", "Early Access", "Free To Play", "Software Training", "Game Development", "Audio Production", "Utilities","Photo Editing", "Video Production", 
-                 "Design & Illustration", "Sexual Content", "Nudity", "Animation & Modeling", "Web Publishing", "0", "83", "87", "84"}
+EXCLUDED_TAGS = {
+    "Indie", "Early Access", "Free To Play", "Software Training", 
+    "Game Development", "Audio Production", "Utilities", "Photo Editing", 
+    "Video Production", "Design & Illustration", "Sexual Content", 
+    "Nudity", "Animation & Modeling", "Web Publishing"
+}
+
+# 0부터 100까지의 숫자를 문자열로 변환하여 추가
+numbers_to_add = {str(i) for i in range(101)}
+
+# 기존 집합(set)에 업데이트
+EXCLUDED_TAGS.update(numbers_to_add)
+
+
 
 
 @st.cache_data
