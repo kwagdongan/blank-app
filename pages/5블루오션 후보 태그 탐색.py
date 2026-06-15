@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
 st.title("고성과 게임군 기준 정의")
 
@@ -394,5 +396,35 @@ st.sidebar.metric("고성과 게임 수", f"{high_perf_count:,}개")
 st.sidebar.metric("고성과 게임 비율", f"{high_perf_ratio:.1f}%")
 st.sidebar.markdown("---")
 
+# [추가] 1. 군집분석을 위한 데이터 준비
+cluster_data = tag_df[['전체빈도', '고성과게임비중']]
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(cluster_data)
+
+# 군집 개수 설정 (개발자가 사이드바에서 조절하게 할 수도 있음)
+n_clusters = 4 
+kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+tag_df['cluster'] = kmeans.fit_predict(scaled_data).astype(str)
+
+# [수정] 2. Altair 차트에 색상 적용
+points = (
+    alt.Chart(tag_df)
+    .mark_circle(size=120)
+    .encode(
+        x='전체빈도:Q',
+        y='고성과게임비중:Q',
+        color='cluster:N',  # [핵심] 군집별 색상 구분
+        tooltip=['태그', '전체빈도', '고성과게임비중']
+    )
+)
+
+# [추가] 3. 개발자를 위한 해석 가이드 (대시보드 하단에 배치)
+with st.expander("📊 포지셔닝 맵 해석 가이드"):
+    st.write("""
+    * **고빈도-고비중 (우상단):** 시장의 주류이자 성공 법칙이 검증된 **'스테디셀러 영역'**.
+    * **저빈도-고비중 (좌상단):** 경쟁은 적지만 성과는 높은 **'블루오션 기회 영역'**.
+    * **고빈도-저비중 (우하단):** 경쟁은 치열하나 성과를 내기 힘든 **'레드오션 영역'**.
+    * **저빈도-저비중 (좌하단):** 유저 반응이 아직 확인되지 않은 **'실험적 영역'**.
+    """)
 
 
