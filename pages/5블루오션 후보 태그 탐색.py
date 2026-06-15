@@ -282,13 +282,6 @@ high_tag_count.columns = ['태그', '고성과빈도']
 
 
 
-# 데이터 표준화
-scaler = StandardScaler()
-scaled_data = scaler.fit_transform(tag_df[['전체빈도', '고성과게임비중']])
-
-# 군집화 수행
-kmeans = KMeans(n_clusters=4, random_state=42)
-tag_df['cluster'] = kmeans.fit_predict(scaled_data).astype(str)
 
 
 
@@ -322,6 +315,13 @@ y_mean = tag_df['고성과게임비중'].mean()
 
 
 
+# 데이터 표준화
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(tag_df[['전체빈도', '고성과게임비중']])
+
+# 군집화 수행
+kmeans = KMeans(n_clusters=4, random_state=42)
+tag_df['cluster'] = kmeans.fit_predict(scaled_data).astype(str)
 
 
 
