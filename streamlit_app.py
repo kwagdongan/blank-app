@@ -503,7 +503,7 @@ st.altair_chart(
 )
 
 
-st.markdown("---")
+
 
 # 클러스터별 데이터 요약 (인덱스 및 통계 정보)
 cluster_summary = tag_df.groupby('cluster').agg({
