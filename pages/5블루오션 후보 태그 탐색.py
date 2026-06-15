@@ -43,7 +43,7 @@ df = df.dropna(
 # 슬라이더
 # -------------------
 
-st.sidebar.header("기준치 이상 게임군 설정")
+st.sidebar.header("리뷰-긍정평가율 기준치 이상 게임군 설정")
 
 review_percentile = st.sidebar.slider(
     "리뷰 수 기준 백분위 (%)",
@@ -219,7 +219,7 @@ st.altair_chart(tag_chart, use_container_width=True)
 
 st.info(
     """
-    슬라이더를 조정하면 기준치 이상 게임군의 기준이 변경되며,
+    슬라이더를 조정하면 기준치 이상 게임군이 변경되며,
     이에 따라 포함되는 게임과 게임 수가 실시간으로 변합니다.
     """
 )
