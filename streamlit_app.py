@@ -505,7 +505,7 @@ st.altair_chart(
 
 st.write("""
     우측으로 갈 수록 경쟁 정도가 강해지며, 상단으로 갈 수록 리뷰의 많고 높음이 강해집니다.
-    
+    """)
 
 # 클러스터별 데이터 요약 (인덱스 및 통계 정보)
 cluster_summary = tag_df.groupby('cluster').agg({
