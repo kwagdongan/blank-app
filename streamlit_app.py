@@ -314,7 +314,7 @@ tag_chart = (
 
 
 
-st.subheader("태그 포지셔닝 맵")
+st.subheader("분석 결과 요약")
 
 
 
@@ -481,6 +481,7 @@ st.altair_chart(
 
 st.write("""
     우측으로 갈 수록 경쟁 정도가 강해지며, 상단으로 갈 수록 리뷰의 많고 높음이 강해집니다.
+    분석 결과를 바탕으로 최적의 장르를 선정하거나, 시장 위험이 높은 장르를 회피하는 의사결정에 활용할 수 있습니다.
     """)
 
 cluster_summary = tag_df.groupby('cluster').agg({
