@@ -43,7 +43,8 @@ df = df.dropna(
 # 슬라이더
 # -------------------
 
-st.sidebar.header("리뷰-긍정평가율 기준치 이상 게임군 설정")
+st.sidebar.header("리뷰-긍정평가율")
+st.sidebar.header("기준치 이상 게임군 설정")
 
 review_percentile = st.sidebar.slider(
     "리뷰 수 기준 백분위 (%)",
@@ -113,7 +114,7 @@ st.markdown("---")
 # 산점도
 # -------------------
 
-st.subheader("리뷰수와 긍정 평가 비율 분포 (기준치 이상 게임군 비율 분포)")
+st.subheader("리뷰수와 긍정 평가 비율 분포")
 
 base = alt.Chart(df).mark_circle(
     size=40,
