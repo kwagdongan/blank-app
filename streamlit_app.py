@@ -205,7 +205,8 @@ review_percentile = st.sidebar.slider(
     min_value=50,
     max_value=95,
     value=75,
-    step=5
+    step=5,
+    key="review_percentile_slider"
 )
 
 positive_percentile = st.sidebar.slider(
@@ -213,7 +214,8 @@ positive_percentile = st.sidebar.slider(
     min_value=5,
     max_value=95,
     value=50,
-    step=5
+    step=5,
+    key="positive_percentile_slider"
 )
 
 # -------------------
