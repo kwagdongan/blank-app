@@ -345,7 +345,7 @@ points = (
         ),
         y=alt.Y(
             '고성과게임비중:Q',
-            title='태그별 고성과 게임 비중'
+            title='태그별 기준치 이상 게임 비중'
         ),
         color='cluster:N',  # [핵심] 군집별 색상 구분
         tooltip=[
