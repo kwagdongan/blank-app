@@ -64,7 +64,7 @@ st.markdown("---")
 # ==========================
 
 
-st.subheader("총 리뷰 수 분포 (사용자 관심도로 해석)")
+st.subheader("총 리뷰 수 분포")
 
 # 1. 슬라이더 추가: 리뷰 수 상한값 조절
 # 데이터의 최대값을 슬라이더의 기본값으로 설정
@@ -76,6 +76,8 @@ selected_max = st.slider(
     value=max_review // 10, # 처음에는 전체의 1/10 정도로 좁게 보여줌
     step=100
 )
+
+st.markdown("리뷰수는 게임에 대한 의견 제출이므로 사용자의 관심도로 해석할 수 있음")
 
 # 2. 데이터 필터링
 filtered_df = df[df['total_reviews'] <= selected_max]
@@ -107,7 +109,7 @@ st.altair_chart(
     
 
 # 긍정 비율
-st.subheader("긍정 평가 비율 분포 (사용자 만족도로 해석)")
+st.subheader("긍정 평가 비율 분포")
 
 positive_df = df[df['positive_percentual'] > 0]
     
@@ -131,7 +133,9 @@ st.altair_chart(
 positive_chart,
 use_container_width=True
     )
-
+st.markdown("""
+리뷰의 긍정 평가 비율은 게임에 대한 만족도이므로 사용자 만족도로 해석할 수 있음
+""")
     
 
 st.markdown("---")
