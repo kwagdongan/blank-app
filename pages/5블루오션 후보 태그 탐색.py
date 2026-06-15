@@ -377,28 +377,11 @@ text = (
     )
 )
 
-# 세로선
-vline = alt.Chart(
-    pd.DataFrame({'x': [x_mean]})
-).mark_rule().encode(
-    x='x:Q'
-)
-
-# 가로선
-hline = alt.Chart(
-    pd.DataFrame({'y': [y_mean]})
-).mark_rule().encode(
-    y='y:Q'
-)
 
 chart = (
     points +
     text +
-    vline +
-    hline
-).properties(
-    height=650
-)
+    
 
 st.altair_chart(
     chart,
