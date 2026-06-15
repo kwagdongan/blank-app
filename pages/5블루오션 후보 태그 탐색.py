@@ -409,7 +409,7 @@ with st.expander("포지셔닝 맵 해석 가이드"):
 st.markdown("---")
 
 # 클러스터별 데이터 요약 (인덱스 및 통계 정보)
-cluster_summary = tag_df.groupby('cluster_name').agg({
+cluster_summary = tag_df.groupby('cluster').agg({
     '태그': list,
     '전체빈도': ['mean', 'min', 'max'],
     '고성과게임비중': ['mean', 'min', 'max']
