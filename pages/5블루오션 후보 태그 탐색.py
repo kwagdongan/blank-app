@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 
-st.title("고성과 게임군 기준 탐색")
+st.title("고성과 게임군 기준 정의")
 
 st.markdown("""
 사용자가 직접 리뷰 수와 긍정 평가 비율 기준을 조정하여
