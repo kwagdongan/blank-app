@@ -193,42 +193,8 @@ df = df.dropna(
     subset=['total_reviews', 'positive_percentual']
 )
 
-# -------------------
-# 슬라이더
-# -------------------
 
-st.sidebar.header("리뷰-긍정평가율")
-st.sidebar.header("기준치 이상 게임군 설정")
 
-review_percentile = st.sidebar.slider(
-    "리뷰 수 기준 백분위 (%)",
-    min_value=50,
-    max_value=95,
-    value=75,
-    step=5,
-    key="review_percentile_slider"
-)
-
-positive_percentile = st.sidebar.slider(
-    "긍정 평가 비율 기준 백분위 (%)",
-    min_value=5,
-    max_value=95,
-    value=50,
-    step=5,
-    key="positive_percentile_slider"
-)
-
-# -------------------
-# 기준 계산
-# -------------------
-
-review_threshold = df['total_reviews'].quantile(
-    review_percentile / 100
-)
-
-positive_threshold = df['positive_percentual'].quantile(
-    positive_percentile / 100
-)
 
 # -------------------
 # 고성과 게임군 추출
@@ -536,8 +502,6 @@ st.altair_chart(
     use_container_width=True
 )
 
-st.info("태그별 기준치 이상 게임 비율 = 기준치 이상 게임수/전체 게임수")
-
 
 st.markdown("---")
 
@@ -548,9 +512,6 @@ cluster_summary = tag_df.groupby('cluster').agg({
     '고성과게임비중': ['mean']
 })
 
-# 인덱스 값 확인
-st.write(cluster_summary)
-
 with st.expander("포지셔닝 맵 해석 가이드"):
     st.write("""
     * **고빈도-고비중 (우상단):** 시장의 주류이자 성공 법칙이 검증된 **'스테디셀러 영역'**.
@@ -558,6 +519,11 @@ with st.expander("포지셔닝 맵 해석 가이드"):
     * **고빈도-저비중 (우하단):** 경쟁은 치열하나 성과를 내기 힘든 **'레드오션 영역'**.
     * **저빈도-저비중 (좌하단):** 유저 반응이 아직 확인되지 않은 **'실험적 영역'**.
     """)
+
+
+# 인덱스 값 확인
+st.write(cluster_summary)
+
 
 
 
