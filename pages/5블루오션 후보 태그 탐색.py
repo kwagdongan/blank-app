@@ -275,6 +275,13 @@ high_tag_count.columns = ['태그', '고성과빈도']
 
 
 
+
+
+
+
+
+
+
 # 데이터 표준화
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(tag_df[['전체빈도', '고성과게임비중']])
@@ -315,20 +322,6 @@ y_mean = tag_df['고성과게임비중'].mean()
 
 
 
-
-
-# [추가] 1. 군집분석을 위한 데이터 준비
-cluster_data = tag_df[['전체빈도', '고성과게임비중']]
-scaler = StandardScaler()
-scaled_data = scaler.fit_transform(cluster_data)
-
-
-
-
-# 군집 개수 설정 (개발자가 사이드바에서 조절하게 할 수도 있음)
-n_clusters = 4 
-kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-tag_df['cluster'] = kmeans.fit_predict(scaled_data).astype(str)
 
 
 
