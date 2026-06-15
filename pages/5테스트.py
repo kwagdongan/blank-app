@@ -376,6 +376,11 @@ st.dataframe(
     hide_index=True
 )
 
+high_perf_df = df[
+    (df['positive_percentual'] >= min_positive_rate) & 
+    (df['total_reviews'] >= min_reviews)
+]
+
 total_games = len(df)
 high_perf_count = len(high_perf_df)
 high_perf_ratio = (high_perf_count / total_games) * 100 if total_games > 0 else 0
