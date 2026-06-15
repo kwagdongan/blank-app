@@ -103,7 +103,7 @@ st.markdown("---")
 # 산점도
 # -------------------
 
-st.subheader("리뷰수와 긍정 평가 비율 분포")
+st.subheader("리뷰수와 긍정 평가 비율 분포 (고성과 게임군 비율 분포)")
 
 base = alt.Chart(df).mark_circle(
     size=40,
