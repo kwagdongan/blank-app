@@ -408,29 +408,15 @@ with st.expander("포지셔닝 맵 해석 가이드"):
 
 st.markdown("---")
 
-# 제2사분면 (블루오션 후보)
-quadrant2 = tag_df[
-    (tag_df['전체빈도'] < x_mean) &
-    (tag_df['고성과게임비중'] > y_mean)
-].sort_values(
-    by='고성과게임비중',
-    ascending=False
-)
+# 클러스터별 데이터 요약 (인덱스 및 통계 정보)
+cluster_summary = tag_df.groupby('cluster_name').agg({
+    '태그': list,
+    '전체빈도': ['mean', 'min', 'max'],
+    '고성과게임비중': ['mean', 'min', 'max']
+})
 
-st.subheader("제2사분면 태그 (블루오션 후보)")
-
-st.dataframe(
-    quadrant2[
-        ['태그']
-    ],
-    use_container_width=True,
-    hide_index=True
-)
-
-st.info("""
-결론적으로 제2사분면에 포함되는 태그들을 블루오션 후보로 해석할 수 있다.
-""")
-
+# 인덱스 값 확인
+st.write(cluster_summary)
 
 
 
