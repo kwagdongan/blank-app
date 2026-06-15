@@ -157,7 +157,7 @@ positive_percentile = st.sidebar.slider(
     min_value=5,
     max_value=95,
     value=50,
-    st
+
 )
 
 
