@@ -387,7 +387,7 @@ chart = (points +
 
 chart = chart.encode(
     x=alt.X('전체빈도:Q', scale=alt.Scale(domain=[0, tag_df['전체빈도'].max()])),
-    y=alt.Y('기준치이상게임비중:Q', scale=alt.Scale(domain=[0, tag_df['기준치이상게임비중'].max()]))
+    y=alt.Y('기준치이상게임비중:Q', scale=alt.Scale(domain=[0, tag_df['고성과게임비중'].max()]))
 )
     
 
