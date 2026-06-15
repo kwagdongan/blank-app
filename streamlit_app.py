@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import ast
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
 st.set_page_config(page_title="Steam 분석", layout="wide")
 
