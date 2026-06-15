@@ -39,16 +39,16 @@ review_percentile = st.sidebar.slider(
     "리뷰 수 기준 백분위 (%)",
     min_value=0,
     max_value=100,
-    value=75,
-    step=20
+    value=50,
+    step=5
 )
 
 positive_percentile = st.sidebar.slider(
     "긍정 평가 비율 기준 백분위 (%)",
     min_value=0,
     max_value=100,
-    value=75,
-    step=20
+    value=50,
+    step=5
 )
 
 # -------------------
