@@ -169,7 +169,10 @@ st.altair_chart(
     use_container_width=True
 )
 
-igh_perf_tags = high_perf.explode('genres')
+
+
+
+high_perf_tags = high_perf.explode('genres')
 
 tag_counts = (
     high_perf_tags['genres']
