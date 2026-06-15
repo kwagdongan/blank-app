@@ -70,28 +70,31 @@ with col1:
 
     st.subheader("총 리뷰 수 분포 (사용자 관심도로 해석)")
 
-    review_df = pd.DataFrame({
-        "log_reviews": 
-            df['total_reviews']
-        )
-    })
+review_df = pd.DataFrame({
+    "total_reviews": df['total_reviews']
+})
 
-    review_chart = (
-        alt.Chart(review_df)
-        .mark_bar()
-        .encode(
-            x=alt.X(
-                "log_reviews:Q",
-                bin=alt.Bin(maxbins=30),
-                title="로그 변환 된 총 리뷰 수"
-            ),
-            y=alt.Y(
-                "count()",
-                title=None
-            )
+review_chart = (
+    alt.Chart(review_df)
+    .mark_bar()
+    .encode(
+        x=alt.X(
+            "total_reviews:Q",
+            bin=alt.Bin(maxbins=30),
+            title="총 리뷰 수"
+        ),
+        y=alt.Y(
+            "count()",
+            title="게임 수"
         )
-        .properties(height=350)
     )
+    .properties(height=350)
+)
+
+st.altair_chart(
+    review_chart,
+    use_container_width=True
+)
 
     st.altair_chart(
         review_chart,
