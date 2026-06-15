@@ -398,6 +398,19 @@ st.altair_chart(
 
 st.info("태그별 기준치 이상 게임 비율 = 기준치 이상 게임수/전체 게임수")
 
+
+st.markdown("---")
+
+# 클러스터별 데이터 요약 (인덱스 및 통계 정보)
+cluster_summary = tag_df.groupby('cluster').agg({
+    '태그': list,
+    '전체빈도': ['mean'],
+    '고성과게임비중': ['mean']
+})
+
+# 인덱스 값 확인
+st.write(cluster_summary)
+
 with st.expander("포지셔닝 맵 해석 가이드"):
     st.write("""
     * **고빈도-고비중 (우상단):** 시장의 주류이자 성공 법칙이 검증된 **'스테디셀러 영역'**.
@@ -406,17 +419,6 @@ with st.expander("포지셔닝 맵 해석 가이드"):
     * **저빈도-저비중 (좌하단):** 유저 반응이 아직 확인되지 않은 **'실험적 영역'**.
     """)
 
-st.markdown("---")
-
-# 클러스터별 데이터 요약 (인덱스 및 통계 정보)
-cluster_summary = tag_df.groupby('cluster').agg({
-    '태그': list,
-    '전체빈도': ['mean', 'min', 'max'],
-    '고성과게임비중': ['mean', 'min', 'max']
-})
-
-# 인덱스 값 확인
-st.write(cluster_summary)
 
 
 
