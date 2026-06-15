@@ -447,11 +447,11 @@ points = (
     .encode(
         x=alt.X(
             '전체빈도:Q',
-            title='태그 빈도 (경쟁도)'
+            title='경쟁도'
         ),
         y=alt.Y(
             '고성과게임비중:Q',
-            title='태그별 기준치 이상 게임 비중'
+            title='기준치 이상 비중'
         ),
         color='cluster:N',  # [핵심] 군집별 색상 구분
         tooltip=[
