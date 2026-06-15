@@ -170,7 +170,7 @@ st.altair_chart(
 )
 
 
-
+st.markdown("고성과 게임군의 태그 비중")
 
 high_perf_tags = high_perf.explode('genres')
 
