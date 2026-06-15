@@ -77,7 +77,7 @@ selected_max = st.slider(
     step=100
 )
 
-st.markdown("리뷰수는 게임에 대한 의견 제출이므로 사용자의 관심도로 해석할 수 있음")
+
 
 # 2. 데이터 필터링
 filtered_df = df[df['total_reviews'] <= selected_max]
@@ -105,7 +105,7 @@ st.altair_chart(
     use_container_width=True
 )
     
-
+st.markdown("리뷰수는 게임에 대한 의견 제출이므로 사용자의 관심도로 해석할 수 있음")
     
 
 # 긍정 비율
