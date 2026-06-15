@@ -380,7 +380,7 @@ text = (
 
 chart = (
     points +
-    text +
+    text )
     
 
 st.altair_chart(
