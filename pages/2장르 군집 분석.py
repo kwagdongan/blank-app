@@ -418,7 +418,7 @@ cluster_summary = tag_df.groupby('cluster').agg({
 
 # 2. 출력할 때만 이름을 예쁘게 변경 (rename 사용)
 cluster_summary = cluster_summary.rename(columns={
-    '고성과게임비중': '리뷰가 높고 많은 게임 비중'
+    '고성과게임비중': '태그별 기준치 이상 게임 비중'
 })
 
 # 표 출력
