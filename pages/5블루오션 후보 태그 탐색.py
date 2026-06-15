@@ -326,17 +326,6 @@ tag_df['cluster'] = kmeans.fit_predict(scaled_data).astype(str)
 
 
 
-cluster_names = {
-    '0': '레드오션',
-    '1': '블루오션',
-    '2': '스테디셀러',
-    '3': '실험적 영역'
-}
-
-
-
-tag_df['cluster_name'] = tag_df['cluster'].map(cluster_names)
-
 
 
 
@@ -388,7 +377,7 @@ chart = (points +
     vline +
     hline
 ).properties(
-    width=400,   # 가로 폭 고정
+    width=600,   # 가로 폭 고정
     height=600   # 세로 높이를 가로와 동일하게 설정
 ).encode(
     
