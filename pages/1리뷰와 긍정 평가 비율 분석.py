@@ -63,12 +63,8 @@ st.markdown("---")
 # 히스토그램
 # ==========================
 
-col1, col2 = st.columns(2)
 
-# 리뷰 수
-with col1:
-
-    st.subheader("총 리뷰 수 분포 (사용자 관심도로 해석)")
+st.subheader("총 리뷰 수 분포 (사용자 관심도로 해석)")
 
 # 1. 슬라이더 추가: 리뷰 수 상한값 조절
 # 데이터의 최대값을 슬라이더의 기본값으로 설정
@@ -111,32 +107,29 @@ st.altair_chart(
     
 
 # 긍정 비율
-with col2:
+st.subheader("긍정 평가 비율 분포 (사용자 만족도로 해석)")
 
-    st.subheader("긍정 평가 비율 분포 (사용자 만족도로 해석)")
-
-    positive_df = df[df['positive_percentual'] > 0]
+positive_df = df[df['positive_percentual'] > 0]
     
-    positive_chart = (
-        alt.Chart(positive_df)
-        .mark_bar()
-        .encode(
-            x=alt.X(
-                "positive_percentual:Q",
-                bin=alt.Bin(step=5),
-                title="긍정 평가 비율 (%)"
-            ),
-            y=alt.Y(
-                "count()",
-                title=None
-            )
-        )
-        .properties(height=350)
-    )
+positive_chart = (
+alt.Chart(positive_df)
+.mark_bar()
+.encode(
+x=alt.X(
+"positive_percentual:Q",
+bin=alt.Bin(step=5),
+title="긍정 평가 비율 (%)"
+),
+y=alt.Y(
+"count()",
+title=None
+)
+)
+.properties(height=350))
 
-    st.altair_chart(
-        positive_chart,
-        use_container_width=True
+st.altair_chart(
+positive_chart,
+use_container_width=True
     )
 
     
