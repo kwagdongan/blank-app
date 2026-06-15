@@ -296,12 +296,12 @@ points = (
         ),
         y=alt.Y(
             '고성과게임비중:Q',
-            title='고성과 게임 비중'
+            title='태그별 고성과 게임 비중'
         ),
         tooltip=[
             alt.Tooltip('태그:N'),
             alt.Tooltip('전체빈도:Q', format=','),
-            alt.Tooltip('고성과게임비중:Q', format='.3f')
+            alt.Tooltip('태그별고성과게임비중:Q', format='.3f')
         ]
     )
 )
