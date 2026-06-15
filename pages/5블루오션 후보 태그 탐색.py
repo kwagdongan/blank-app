@@ -382,7 +382,7 @@ text = (
     )
 )
 
-
+/*
 chart = (points +
     text +
     vline +
@@ -390,6 +390,13 @@ chart = (points +
 ).properties(
     width=600,   # 가로 폭 고정
     height=600   # 세로 높이를 가로와 동일하게 설정
+)
+*/
+
+
+chart = chart.encode(
+    x=alt.X('전체빈도:Q', scale=alt.Scale(domain=[0, tag_df['전체빈도'].max()])),
+    y=alt.Y('고성과게임비중:Q', scale=alt.Scale(domain=[0, tag_df['고성과게임비중'].max()]))
 )
     
 
