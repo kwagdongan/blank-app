@@ -3,6 +3,7 @@ import pandas as pd
 import ast
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+import altair as alt
 
 st.set_page_config(page_title="Steam 분석", layout="wide")
 
@@ -173,6 +174,9 @@ high_perf = df[
     &
     (df['positive_percentual'] >= positive_threshold)
 ].copy()
+
+
+
 
 
 
